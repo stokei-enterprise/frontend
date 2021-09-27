@@ -1,0 +1,17 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "start": "lerna run start --stream",
+    "dev": "lerna run dev --parallel",
+		"check-updates": "npx lerna exec npm run check-updates",
+    "check-updates-deploy": "npx lerna exec npm run check-updates-deploy"
+  },
+  "devDependencies": {
+    "create-react-library": "^3.1.1",
+    "lerna": "^4.0.0",
+    "typescript": "^4.4.3"
+  }
+}
