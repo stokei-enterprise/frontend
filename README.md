@@ -6,7 +6,7 @@
 
 ##### Description
 
-Monorepo com os *frontends* da [Stokei](https://stokei.com).
+Monorepo com os _frontends_ da [Stokei](https://stokei.com).
 
 ##### Installation
 

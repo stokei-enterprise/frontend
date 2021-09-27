@@ -1,5 +1,5 @@
 export interface FindAllData<TFilter = any> {
-  filter: TFilter;
-  limit?: number;
-  page?: number;
+  filter: TFilter
+  limit?: number
+  page?: number
 }
