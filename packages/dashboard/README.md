@@ -2,11 +2,11 @@
   <img width="100px" alt="NextJS-ChakraUI" src="https://assets.stokei.com/logos/logo.png" />
 </div>
 
-## Frontends
+## Frontend da Dashboard
 
 ##### Description
 
-Monorepo com os _frontends_ da [Stokei](https://stokei.com).
+Painel dos usuários da [Stokei](https://stokei.com).
 
 ##### Installation
 

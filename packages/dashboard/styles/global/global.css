@@ -1,0 +1,40 @@
+html,
+body,
+body > div {
+  width: 100%;
+  height: auto;
+  min-height: 100% !important;
+  color: #0e2524;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: #24615e;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon,
+.ant-steps-item-custom.ant-steps-item-process
+  .ant-steps-item-icon
+  > .ant-steps-icon {
+  color: #24615e !important;
+}
+.ant-steps-navigation .ant-steps-item::before {
+  background-color: #24615e !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+pre {
+  width: 100% !important;
+  margin: 0 !important;
+  display: flex !important;
+  overflow: hidden !important;
+  word-break: break-word !important;
+  white-space: pre-line !important;
+  font-family: unset !important;
+  font-size: inherit !important;
+}
