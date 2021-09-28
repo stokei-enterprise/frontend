@@ -14,7 +14,7 @@ export interface BadgeProps {
 export const Badge: React.FC<BadgeProps> = ({
   title,
   variant = 'solid',
-  color = 'yellow',
+  color = 'primary',
   className,
   ...props
 }) => {
