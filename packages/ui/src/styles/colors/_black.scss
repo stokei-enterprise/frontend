@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-black: #071312;
+
+$colors-black-50: colorPalette($base-color-black, 1);
+$colors-black-100: colorPalette($base-color-black, 2);
+$colors-black-200: colorPalette($base-color-black, 3);
+$colors-black-300: colorPalette($base-color-black, 4);
+$colors-black-400: colorPalette($base-color-black, 5);
+$colors-black-500: colorPalette($base-color-black, 6);
+$colors-black-600: colorPalette($base-color-black, 7);
+$colors-black-700: colorPalette($base-color-black, 8);
+$colors-black-800: colorPalette($base-color-black, 9);
+$colors-black-900: colorPalette($base-color-black, 10);

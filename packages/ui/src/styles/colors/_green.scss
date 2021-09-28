@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-green: #38a169;
+
+$colors-green-50: colorPalette($base-color-green, 1);
+$colors-green-100: colorPalette($base-color-green, 2);
+$colors-green-200: colorPalette($base-color-green, 3);
+$colors-green-300: colorPalette($base-color-green, 4);
+$colors-green-400: colorPalette($base-color-green, 5);
+$colors-green-500: colorPalette($base-color-green, 6);
+$colors-green-600: colorPalette($base-color-green, 7);
+$colors-green-700: colorPalette($base-color-green, 8);
+$colors-green-800: colorPalette($base-color-green, 9);
+$colors-green-900: colorPalette($base-color-green, 10);

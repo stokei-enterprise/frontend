@@ -1,0 +1,17 @@
+@function colorPalette($color, $index) {
+    $palette-middle-index: 6;
+    $palette-lighten-color-shift: 8;
+    $palette-darken-color-shift: 8;
+
+    @if $index < $palette-middle-index {
+        $lighten-percent: ($palette-middle-index - $index) * $palette-lighten-color-shift;
+        @return lighten($color, $lighten-percent);
+    }
+
+    @if $index > $palette-middle-index {
+        $darken-percent: ($index - $palette-middle-index) * $palette-darken-color-shift;
+        @return darken($color, $darken-percent);
+    }
+
+    @return $color;
+}

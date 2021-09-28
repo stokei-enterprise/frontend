@@ -1,0 +1,76 @@
+@import 'variables';
+
+.button-clean {
+  &.button-primary {
+    @include button-variant-clean($button-color-primary);
+  }
+  &.button-secondary {
+    @include button-variant-clean($button-color-secondary);
+  }
+  &.button-white {
+    @include button-variant-clean($button-color-white);
+  }
+  &.button-black {
+    @include button-variant-clean($button-color-black);
+  }
+  &.button-gray {
+    @include button-variant-clean($button-color-gray);
+  }
+  &.button-red {
+    @include button-variant-clean($button-color-red);
+  }
+  &.button-orange {
+    @include button-variant-clean($button-color-orange);
+  }
+  &.button-yellow {
+    @include button-variant-clean($button-color-yellow);
+  }
+  &.button-green {
+    @include button-variant-clean($button-color-green);
+  }
+  &.button-teal {
+    @include button-variant-clean($button-color-teal);
+  }
+  &.button-blue {
+    @include button-variant-clean($button-color-blue);
+  }
+  &.button-cyan {
+    @include button-variant-clean($button-color-cyan);
+  }
+  &.button-purple {
+    @include button-variant-clean($button-color-purple);
+  }
+  &.button-pink {
+    @include button-variant-clean($button-color-pink);
+  }
+  &.button-linkedin {
+    @include button-variant-clean($button-color-linkedin);
+  }
+  &.button-facebook {
+    @include button-variant-clean($button-color-facebook);
+  }
+  &.button-messenger {
+    @include button-variant-clean($button-color-messenger);
+  }
+  &.button-whatsapp {
+    @include button-variant-clean($button-color-whatsapp);
+  }
+  &.button-twitter {
+    @include button-variant-clean($button-color-twitter);
+  }
+  &.button-telegram {
+    @include button-variant-clean($button-color-telegram);
+  }
+  &.button-success {
+    @include button-variant-clean($button-color-success);
+  }
+  &.button-error {
+    @include button-variant-clean($button-color-error);
+  }
+  &.button-warning {
+    @include button-variant-clean($button-color-warning);
+  }
+  &.button-info {
+    @include button-variant-clean($button-color-info);
+  }
+}

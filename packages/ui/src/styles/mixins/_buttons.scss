@@ -10,19 +10,19 @@
 
   &:focus,
   &.focus {
-    color: $color;
+    color: darken($color, 10%);
     background-color: darken($background, 10%);
     border-color: darken($border, 25%);
   }
   &:hover {
-    color: $color;
+    color: darken($color, 10%);
     background-color: darken($background, 10%);
     border-color: darken($border, 12%);
   }
   &:active,
   &.active,
   .open > &.dropdown-toggle {
-    color: $color;
+    color: darken($color, 10%);
     background-color: darken($background, 10%);
     background-image: none;
     border-color: darken($border, 12%);
@@ -30,7 +30,7 @@
     &:hover,
     &:focus,
     &.focus {
-      color: $color;
+      color: darken($color, 10%);
       background-color: darken($background, 17%);
       border-color: darken($border, 25%);
     }

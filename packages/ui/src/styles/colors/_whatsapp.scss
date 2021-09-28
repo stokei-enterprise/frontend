@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-whatsapp: #22c35e;
+
+$colors-whatsapp-50: colorPalette($base-color-whatsapp, 1);
+$colors-whatsapp-100: colorPalette($base-color-whatsapp, 2);
+$colors-whatsapp-200: colorPalette($base-color-whatsapp, 3);
+$colors-whatsapp-300: colorPalette($base-color-whatsapp, 4);
+$colors-whatsapp-400: colorPalette($base-color-whatsapp, 5);
+$colors-whatsapp-500: colorPalette($base-color-whatsapp, 6);
+$colors-whatsapp-600: colorPalette($base-color-whatsapp, 7);
+$colors-whatsapp-700: colorPalette($base-color-whatsapp, 8);
+$colors-whatsapp-800: colorPalette($base-color-whatsapp, 9);
+$colors-whatsapp-900: colorPalette($base-color-whatsapp, 10);

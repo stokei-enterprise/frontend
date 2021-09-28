@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-pink: #d53f8c;
+
+$colors-pink-50: colorPalette($base-color-pink, 1);
+$colors-pink-100: colorPalette($base-color-pink, 2);
+$colors-pink-200: colorPalette($base-color-pink, 3);
+$colors-pink-300: colorPalette($base-color-pink, 4);
+$colors-pink-400: colorPalette($base-color-pink, 5);
+$colors-pink-500: colorPalette($base-color-pink, 6);
+$colors-pink-600: colorPalette($base-color-pink, 7);
+$colors-pink-700: colorPalette($base-color-pink, 8);
+$colors-pink-800: colorPalette($base-color-pink, 9);
+$colors-pink-900: colorPalette($base-color-pink, 10);

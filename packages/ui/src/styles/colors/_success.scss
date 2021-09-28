@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-success: #38a169;
+
+$colors-success-50: colorPalette($base-color-success, 1);
+$colors-success-100: colorPalette($base-color-success, 2);
+$colors-success-200: colorPalette($base-color-success, 3);
+$colors-success-300: colorPalette($base-color-success, 4);
+$colors-success-400: colorPalette($base-color-success, 5);
+$colors-success-500: colorPalette($base-color-success, 6);
+$colors-success-600: colorPalette($base-color-success, 7);
+$colors-success-700: colorPalette($base-color-success, 8);
+$colors-success-800: colorPalette($base-color-success, 9);
+$colors-success-900: colorPalette($base-color-success, 10);

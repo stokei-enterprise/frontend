@@ -1,0 +1,172 @@
+@import 'variables';
+
+.badge-solid {
+  &.badge-primary {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-primary,
+      $badge-color-primary
+    );
+  }
+  &.badge-secondary {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-secondary,
+      $badge-color-secondary
+    );
+  }
+  &.badge-white {
+    @include badge-variant(
+      $badge-color-black,
+      $badge-color-white,
+      $badge-color-white
+    );
+  }
+  &.badge-black {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-black,
+      $badge-color-black
+    );
+  }
+  &.badge-gray {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-gray,
+      $badge-color-gray
+    );
+  }
+  &.badge-red {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-red,
+      $badge-color-red
+    );
+  }
+  &.badge-orange {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-orange,
+      $badge-color-orange
+    );
+  }
+  &.badge-yellow {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-yellow,
+      $badge-color-yellow
+    );
+  }
+  &.badge-green {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-green,
+      $badge-color-green
+    );
+  }
+  &.badge-teal {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-teal,
+      $badge-color-teal
+    );
+  }
+  &.badge-blue {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-blue,
+      $badge-color-blue
+    );
+  }
+  &.badge-cyan {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-cyan,
+      $badge-color-cyan
+    );
+  }
+  &.badge-purple {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-purple,
+      $badge-color-purple
+    );
+  }
+  &.badge-pink {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-pink,
+      $badge-color-pink
+    );
+  }
+  &.badge-linkedin {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-linkedin,
+      $badge-color-linkedin
+    );
+  }
+  &.badge-facebook {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-facebook,
+      $badge-color-facebook
+    );
+  }
+  &.badge-messenger {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-messenger,
+      $badge-color-messenger
+    );
+  }
+  &.badge-whatsapp {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-whatsapp,
+      $badge-color-whatsapp
+    );
+  }
+  &.badge-twitter {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-twitter,
+      $badge-color-twitter
+    );
+  }
+  &.badge-telegram {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-telegram,
+      $badge-color-telegram
+    );
+  }
+  &.badge-success {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-success,
+      $badge-color-success
+    );
+  }
+  &.badge-error {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-error,
+      $badge-color-error
+    );
+  }
+  &.badge-warning {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-warning,
+      $badge-color-warning
+    );
+  }
+  &.badge-info {
+    @include badge-variant(
+      $badge-color-white,
+      $badge-color-info,
+      $badge-color-info
+    );
+  }
+}

@@ -1,4 +1,4 @@
-export type ButtonColorsType =
+export type BadgeColorsType =
   | 'primary'
   | 'secondary'
   | 'white'

@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-secondary: #24615e;
+
+$colors-secondary-50: colorPalette($base-color-secondary, 1);
+$colors-secondary-100: colorPalette($base-color-secondary, 2);
+$colors-secondary-200: colorPalette($base-color-secondary, 3);
+$colors-secondary-300: colorPalette($base-color-secondary, 4);
+$colors-secondary-400: colorPalette($base-color-secondary, 5);
+$colors-secondary-500: colorPalette($base-color-secondary, 6);
+$colors-secondary-600: colorPalette($base-color-secondary, 7);
+$colors-secondary-700: colorPalette($base-color-secondary, 8);
+$colors-secondary-800: colorPalette($base-color-secondary, 9);
+$colors-secondary-900: colorPalette($base-color-secondary, 10);

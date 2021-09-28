@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-purple: #805ad5;
+
+$colors-purple-50: colorPalette($base-color-purple, 1);
+$colors-purple-100: colorPalette($base-color-purple, 2);
+$colors-purple-200: colorPalette($base-color-purple, 3);
+$colors-purple-300: colorPalette($base-color-purple, 4);
+$colors-purple-400: colorPalette($base-color-purple, 5);
+$colors-purple-500: colorPalette($base-color-purple, 6);
+$colors-purple-600: colorPalette($base-color-purple, 7);
+$colors-purple-700: colorPalette($base-color-purple, 8);
+$colors-purple-800: colorPalette($base-color-purple, 9);
+$colors-purple-900: colorPalette($base-color-purple, 10);

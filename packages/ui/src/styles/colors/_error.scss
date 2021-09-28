@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-error: #e53e3e;
+
+$colors-error-50: colorPalette($base-color-error, 1);
+$colors-error-100: colorPalette($base-color-error, 2);
+$colors-error-200: colorPalette($base-color-error, 3);
+$colors-error-300: colorPalette($base-color-error, 4);
+$colors-error-400: colorPalette($base-color-error, 5);
+$colors-error-500: colorPalette($base-color-error, 6);
+$colors-error-600: colorPalette($base-color-error, 7);
+$colors-error-700: colorPalette($base-color-error, 8);
+$colors-error-800: colorPalette($base-color-error, 9);
+$colors-error-900: colorPalette($base-color-error, 10);

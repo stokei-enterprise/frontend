@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-teal: #319795;
+
+$colors-teal-50: colorPalette($base-color-teal, 1);
+$colors-teal-100: colorPalette($base-color-teal, 2);
+$colors-teal-200: colorPalette($base-color-teal, 3);
+$colors-teal-300: colorPalette($base-color-teal, 4);
+$colors-teal-400: colorPalette($base-color-teal, 5);
+$colors-teal-500: colorPalette($base-color-teal, 6);
+$colors-teal-600: colorPalette($base-color-teal, 7);
+$colors-teal-700: colorPalette($base-color-teal, 8);
+$colors-teal-800: colorPalette($base-color-teal, 9);
+$colors-teal-900: colorPalette($base-color-teal, 10);

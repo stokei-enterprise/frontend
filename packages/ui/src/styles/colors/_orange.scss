@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-orange: #dd6b20;
+
+$colors-orange-50: colorPalette($base-color-orange, 1);
+$colors-orange-100: colorPalette($base-color-orange, 2);
+$colors-orange-200: colorPalette($base-color-orange, 3);
+$colors-orange-300: colorPalette($base-color-orange, 4);
+$colors-orange-400: colorPalette($base-color-orange, 5);
+$colors-orange-500: colorPalette($base-color-orange, 6);
+$colors-orange-600: colorPalette($base-color-orange, 7);
+$colors-orange-700: colorPalette($base-color-orange, 8);
+$colors-orange-800: colorPalette($base-color-orange, 9);
+$colors-orange-900: colorPalette($base-color-orange, 10);

@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react'
 import classNames from 'classnames'
-import styles from './styles.module.scss'
+import styles from './styles/styles.module.scss'
 import { ButtonColorsType } from '../../@types/buttons/colors'
 import { ButtonVariantsType } from '../../@types/buttons/variants'
 
@@ -12,7 +12,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'solid',
-  color = 'yellow',
+  color = 'primary',
   className,
   ...props
 }) => {
