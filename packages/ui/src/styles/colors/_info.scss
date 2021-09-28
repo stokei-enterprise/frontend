@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-info: #00b5d8;
+
+$colors-info-50: colorPalette($base-color-info, 1);
+$colors-info-100: colorPalette($base-color-info, 2);
+$colors-info-200: colorPalette($base-color-info, 3);
+$colors-info-300: colorPalette($base-color-info, 4);
+$colors-info-400: colorPalette($base-color-info, 5);
+$colors-info-500: colorPalette($base-color-info, 6);
+$colors-info-600: colorPalette($base-color-info, 7);
+$colors-info-700: colorPalette($base-color-info, 8);
+$colors-info-800: colorPalette($base-color-info, 9);
+$colors-info-900: colorPalette($base-color-info, 10);

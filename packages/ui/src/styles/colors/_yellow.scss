@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-yellow: #d69e2e;
+
+$colors-yellow-50: colorPalette($base-color-yellow, 1);
+$colors-yellow-100: colorPalette($base-color-yellow, 2);
+$colors-yellow-200: colorPalette($base-color-yellow, 3);
+$colors-yellow-300: colorPalette($base-color-yellow, 4);
+$colors-yellow-400: colorPalette($base-color-yellow, 5);
+$colors-yellow-500: colorPalette($base-color-yellow, 6);
+$colors-yellow-600: colorPalette($base-color-yellow, 7);
+$colors-yellow-700: colorPalette($base-color-yellow, 8);
+$colors-yellow-800: colorPalette($base-color-yellow, 9);
+$colors-yellow-900: colorPalette($base-color-yellow, 10);

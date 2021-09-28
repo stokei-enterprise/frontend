@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-red: #e53e3e;
+
+$colors-red-50: colorPalette($base-color-red, 1);
+$colors-red-100: colorPalette($base-color-red, 2);
+$colors-red-200: colorPalette($base-color-red, 3);
+$colors-red-300: colorPalette($base-color-red, 4);
+$colors-red-400: colorPalette($base-color-red, 5);
+$colors-red-500: colorPalette($base-color-red, 6);
+$colors-red-600: colorPalette($base-color-red, 7);
+$colors-red-700: colorPalette($base-color-red, 8);
+$colors-red-800: colorPalette($base-color-red, 9);
+$colors-red-900: colorPalette($base-color-red, 10);

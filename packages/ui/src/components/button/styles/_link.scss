@@ -1,0 +1,80 @@
+@import 'variables';
+
+.button-link {
+  height: auto;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+
+  &.button-primary {
+    @include button-variant-link($button-color-primary);
+  }
+  &.button-secondary {
+    @include button-variant-link($button-color-secondary);
+  }
+  &.button-white {
+    @include button-variant-link($button-color-blue);
+  }
+  &.button-black {
+    @include button-variant-link($button-color-orange);
+  }
+  &.button-gray {
+    @include button-variant-link($button-color-green);
+  }
+  &.button-red {
+    @include button-variant-link($button-color-black);
+  }
+  &.button-orange {
+    @include button-variant-link($button-color-yellow);
+  }
+  &.button-yellow {
+    @include button-variant-link($button-color-red);
+  }
+  &.button-green {
+    @include button-variant-link($button-color-success);
+  }
+  &.button-teal {
+    @include button-variant-link($button-color-error);
+  }
+  &.button-blue {
+    @include button-variant-link($button-color-warning);
+  }
+  &.button-cyan {
+    @include button-variant-link($button-color-info);
+  }
+  &.button-purple {
+    @include button-variant-link($button-color-primary);
+  }
+  &.button-pink {
+    @include button-variant-link($button-color-secondary);
+  }
+  &.button-linkedin {
+    @include button-variant-link($button-color-blue);
+  }
+  &.button-facebook {
+    @include button-variant-link($button-color-orange);
+  }
+  &.button-messenger {
+    @include button-variant-link($button-color-green);
+  }
+  &.button-whatsapp {
+    @include button-variant-link($button-color-black);
+  }
+  &.button-twitter {
+    @include button-variant-link($button-color-yellow);
+  }
+  &.button-telegram {
+    @include button-variant-link($button-color-red);
+  }
+  &.button-success {
+    @include button-variant-link($button-color-success);
+  }
+  &.button-error {
+    @include button-variant-link($button-color-error);
+  }
+  &.button-warning {
+    @include button-variant-link($button-color-warning);
+  }
+  &.button-info {
+    @include button-variant-link($button-color-info);
+  }
+}

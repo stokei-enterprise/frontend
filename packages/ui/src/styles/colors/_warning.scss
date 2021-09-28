@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-warning: #d69e2e;
+
+$colors-warning-50: colorPalette($base-color-warning, 1);
+$colors-warning-100: colorPalette($base-color-warning, 2);
+$colors-warning-200: colorPalette($base-color-warning, 3);
+$colors-warning-300: colorPalette($base-color-warning, 4);
+$colors-warning-400: colorPalette($base-color-warning, 5);
+$colors-warning-500: colorPalette($base-color-warning, 6);
+$colors-warning-600: colorPalette($base-color-warning, 7);
+$colors-warning-700: colorPalette($base-color-warning, 8);
+$colors-warning-800: colorPalette($base-color-warning, 9);
+$colors-warning-900: colorPalette($base-color-warning, 10);

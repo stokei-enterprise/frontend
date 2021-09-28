@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-cyan: #00b5d8;
+
+$colors-cyan-50: colorPalette($base-color-cyan, 1);
+$colors-cyan-100: colorPalette($base-color-cyan, 2);
+$colors-cyan-200: colorPalette($base-color-cyan, 3);
+$colors-cyan-300: colorPalette($base-color-cyan, 4);
+$colors-cyan-400: colorPalette($base-color-cyan, 5);
+$colors-cyan-500: colorPalette($base-color-cyan, 6);
+$colors-cyan-600: colorPalette($base-color-cyan, 7);
+$colors-cyan-700: colorPalette($base-color-cyan, 8);
+$colors-cyan-800: colorPalette($base-color-cyan, 9);
+$colors-cyan-900: colorPalette($base-color-cyan, 10);

@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-telegram: #0088cc;
+
+$colors-telegram-50: colorPalette($base-color-telegram, 1);
+$colors-telegram-100: colorPalette($base-color-telegram, 2);
+$colors-telegram-200: colorPalette($base-color-telegram, 3);
+$colors-telegram-300: colorPalette($base-color-telegram, 4);
+$colors-telegram-400: colorPalette($base-color-telegram, 5);
+$colors-telegram-500: colorPalette($base-color-telegram, 6);
+$colors-telegram-600: colorPalette($base-color-telegram, 7);
+$colors-telegram-700: colorPalette($base-color-telegram, 8);
+$colors-telegram-800: colorPalette($base-color-telegram, 9);
+$colors-telegram-900: colorPalette($base-color-telegram, 10);

@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-facebook: #385898;
+
+$colors-facebook-50: colorPalette($base-color-facebook, 1);
+$colors-facebook-100: colorPalette($base-color-facebook, 2);
+$colors-facebook-200: colorPalette($base-color-facebook, 3);
+$colors-facebook-300: colorPalette($base-color-facebook, 4);
+$colors-facebook-400: colorPalette($base-color-facebook, 5);
+$colors-facebook-500: colorPalette($base-color-facebook, 6);
+$colors-facebook-600: colorPalette($base-color-facebook, 7);
+$colors-facebook-700: colorPalette($base-color-facebook, 8);
+$colors-facebook-800: colorPalette($base-color-facebook, 9);
+$colors-facebook-900: colorPalette($base-color-facebook, 10);

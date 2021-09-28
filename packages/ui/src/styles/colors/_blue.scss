@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-blue: #3182ce;
+
+$colors-blue-50: colorPalette($base-color-blue, 1);
+$colors-blue-100: colorPalette($base-color-blue, 2);
+$colors-blue-200: colorPalette($base-color-blue, 3);
+$colors-blue-300: colorPalette($base-color-blue, 4);
+$colors-blue-400: colorPalette($base-color-blue, 5);
+$colors-blue-500: colorPalette($base-color-blue, 6);
+$colors-blue-600: colorPalette($base-color-blue, 7);
+$colors-blue-700: colorPalette($base-color-blue, 8);
+$colors-blue-800: colorPalette($base-color-blue, 9);
+$colors-blue-900: colorPalette($base-color-blue, 10);

@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-linkedin: #00a0dc;
+
+$colors-linkedin-50: colorPalette($base-color-linkedin, 1);
+$colors-linkedin-100: colorPalette($base-color-linkedin, 2);
+$colors-linkedin-200: colorPalette($base-color-linkedin, 3);
+$colors-linkedin-300: colorPalette($base-color-linkedin, 4);
+$colors-linkedin-400: colorPalette($base-color-linkedin, 5);
+$colors-linkedin-500: colorPalette($base-color-linkedin, 6);
+$colors-linkedin-600: colorPalette($base-color-linkedin, 7);
+$colors-linkedin-700: colorPalette($base-color-linkedin, 8);
+$colors-linkedin-800: colorPalette($base-color-linkedin, 9);
+$colors-linkedin-900: colorPalette($base-color-linkedin, 10);

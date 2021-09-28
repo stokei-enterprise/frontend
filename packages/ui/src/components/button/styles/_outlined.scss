@@ -1,0 +1,174 @@
+@import 'variables';
+
+.button-outlined {
+  border: 1px solid;
+
+  &.button-primary {
+    @include button-variant(
+      $button-color-primary,
+      $button-color-transparent,
+      $button-color-primary
+    );
+  }
+  &.button-secondary {
+    @include button-variant(
+      $button-color-secondary,
+      $button-color-transparent,
+      $button-color-secondary
+    );
+  }
+  &.button-white {
+    @include button-variant(
+      $button-color-white,
+      $button-color-transparent,
+      $button-color-white
+    );
+  }
+  &.button-black {
+    @include button-variant(
+      $button-color-black,
+      $button-color-transparent,
+      $button-color-black
+    );
+  }
+  &.button-gray {
+    @include button-variant(
+      $button-color-gray,
+      $button-color-transparent,
+      $button-color-gray
+    );
+  }
+  &.button-red {
+    @include button-variant(
+      $button-color-red,
+      $button-color-transparent,
+      $button-color-red
+    );
+  }
+  &.button-orange {
+    @include button-variant(
+      $button-color-orange,
+      $button-color-transparent,
+      $button-color-orange
+    );
+  }
+  &.button-yellow {
+    @include button-variant(
+      $button-color-yellow,
+      $button-color-transparent,
+      $button-color-yellow
+    );
+  }
+  &.button-green {
+    @include button-variant(
+      $button-color-green,
+      $button-color-transparent,
+      $button-color-green
+    );
+  }
+  &.button-teal {
+    @include button-variant(
+      $button-color-teal,
+      $button-color-transparent,
+      $button-color-teal
+    );
+  }
+  &.button-blue {
+    @include button-variant(
+      $button-color-blue,
+      $button-color-transparent,
+      $button-color-blue
+    );
+  }
+  &.button-cyan {
+    @include button-variant(
+      $button-color-cyan,
+      $button-color-transparent,
+      $button-color-cyan
+    );
+  }
+  &.button-purple {
+    @include button-variant(
+      $button-color-purple,
+      $button-color-transparent,
+      $button-color-purple
+    );
+  }
+  &.button-pink {
+    @include button-variant(
+      $button-color-pink,
+      $button-color-transparent,
+      $button-color-pink
+    );
+  }
+  &.button-linkedin {
+    @include button-variant(
+      $button-color-linkedin,
+      $button-color-transparent,
+      $button-color-linkedin
+    );
+  }
+  &.button-facebook {
+    @include button-variant(
+      $button-color-facebook,
+      $button-color-transparent,
+      $button-color-facebook
+    );
+  }
+  &.button-messenger {
+    @include button-variant(
+      $button-color-messenger,
+      $button-color-transparent,
+      $button-color-messenger
+    );
+  }
+  &.button-whatsapp {
+    @include button-variant(
+      $button-color-whatsapp,
+      $button-color-transparent,
+      $button-color-whatsapp
+    );
+  }
+  &.button-twitter {
+    @include button-variant(
+      $button-color-twitter,
+      $button-color-transparent,
+      $button-color-twitter
+    );
+  }
+  &.button-telegram {
+    @include button-variant(
+      $button-color-telegram,
+      $button-color-transparent,
+      $button-color-telegram
+    );
+  }
+  &.button-success {
+    @include button-variant(
+      $button-color-success,
+      $button-color-transparent,
+      $button-color-success
+    );
+  }
+  &.button-error {
+    @include button-variant(
+      $button-color-error,
+      $button-color-transparent,
+      $button-color-error
+    );
+  }
+  &.button-warning {
+    @include button-variant(
+      $button-color-warning,
+      $button-color-transparent,
+      $button-color-warning
+    );
+  }
+  &.button-info {
+    @include button-variant(
+      $button-color-info,
+      $button-color-transparent,
+      $button-color-info
+    );
+  }
+}

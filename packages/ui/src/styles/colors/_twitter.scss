@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-twitter: #1da1f2;
+
+$colors-twitter-50: colorPalette($base-color-twitter, 1);
+$colors-twitter-100: colorPalette($base-color-twitter, 2);
+$colors-twitter-200: colorPalette($base-color-twitter, 3);
+$colors-twitter-300: colorPalette($base-color-twitter, 4);
+$colors-twitter-400: colorPalette($base-color-twitter, 5);
+$colors-twitter-500: colorPalette($base-color-twitter, 6);
+$colors-twitter-600: colorPalette($base-color-twitter, 7);
+$colors-twitter-700: colorPalette($base-color-twitter, 8);
+$colors-twitter-800: colorPalette($base-color-twitter, 9);
+$colors-twitter-900: colorPalette($base-color-twitter, 10);

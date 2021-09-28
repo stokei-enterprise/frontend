@@ -1,0 +1,14 @@
+@import '../functions/color-palette';
+
+$base-color-messenger: #0078ff;
+
+$colors-messenger-50: colorPalette($base-color-messenger, 1);
+$colors-messenger-100: colorPalette($base-color-messenger, 2);
+$colors-messenger-200: colorPalette($base-color-messenger, 3);
+$colors-messenger-300: colorPalette($base-color-messenger, 4);
+$colors-messenger-400: colorPalette($base-color-messenger, 5);
+$colors-messenger-500: colorPalette($base-color-messenger, 6);
+$colors-messenger-600: colorPalette($base-color-messenger, 7);
+$colors-messenger-700: colorPalette($base-color-messenger, 8);
+$colors-messenger-800: colorPalette($base-color-messenger, 9);
+$colors-messenger-900: colorPalette($base-color-messenger, 10);
