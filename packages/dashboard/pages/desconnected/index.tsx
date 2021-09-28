@@ -48,7 +48,7 @@ export default function Home({ ...props }) {
           <Text size="lg" marginBottom={7}>
             Volte para pagina inicial e faça login.
           </Text>
-          <Button color="primary" variant="link" onClick={() => redirectUrl()}>
+          <Button color="primary" onClick={() => redirectUrl()}>
             Pagina inicial
           </Button>
         </Flex>

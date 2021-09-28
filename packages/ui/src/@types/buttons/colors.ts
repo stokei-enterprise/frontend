@@ -1,0 +1,13 @@
+export type ButtonColorsType =
+  | 'primary'
+  | 'secondary'
+  | 'blue'
+  | 'orange'
+  | 'green'
+  | 'black'
+  | 'yellow'
+  | 'red'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
