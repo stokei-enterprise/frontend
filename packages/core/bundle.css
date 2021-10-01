@@ -1,0 +1,7 @@
+.button {
+  padding: 0.5em;
+  border: 2px solid lightblue;
+  font-size: 2em;
+  text-align: center;
+  background: lightblue !important;
+}

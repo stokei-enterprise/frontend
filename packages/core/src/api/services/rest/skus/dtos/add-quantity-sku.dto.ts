@@ -1,3 +1,3 @@
-export class AddQuantitySkuDTO {
+export interface AddQuantitySkuDTO {
   readonly quantity: number
 }

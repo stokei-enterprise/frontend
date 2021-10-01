@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { APP_ID_HEADER_NAME, AUTH_HEADER_NAME } from '../headers'
+import { baseApiURL } from '../urls'
 
 export interface AxiosClientConfig extends AxiosRequestConfig {
   readonly appId?: string
@@ -16,6 +17,7 @@ export function axiosClient({
   ...dataConfig
 }: AxiosClientConfig): AxiosInstance {
   const api = axios.create({
+    baseURL: baseApiURL,
     headers: {
       'Content-Type': 'application/json'
     },

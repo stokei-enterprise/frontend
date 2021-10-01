@@ -1,0 +1,44 @@
+{
+  "name": "@stokei/auth",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3050",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.13",
+    "@chakra-ui/react": "^1.6.2",
+    "@chakra-ui/system": "^1.6.6",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@stokei/core": "^1.0.0",
+    "@stokei/ui": "^1.0.0",
+    "axios": "^0.21.1",
+    "date-fns": "^2.21.3",
+    "formik": "^2.2.7",
+    "framer-motion": "^4.1.17",
+    "next": "^11.0.1",
+    "nookies": "^2.5.2",
+    "nprogress": "^0.2.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.4.1",
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^14.6.0",
+    "@types/nookies": "^2.0.3",
+    "@types/nprogress": "^0.2.0",
+    "@types/react": "^16.9.46",
+    "@types/yup": "^0.29.11",
+    "eslint": "^7.29.0",
+    "eslint-config-next": "^11.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "typescript": "^4.3.4"
+  }
+}
