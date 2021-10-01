@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "esnext",
     "lib": ["es2017", "dom"],
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "allowJs": false,
     "jsx": "react",
     "declaration": true,

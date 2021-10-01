@@ -1,3 +1,3 @@
-export class WithdrawQuantitySkuDTO {
+export interface WithdrawQuantitySkuDTO {
   readonly quantity: number
 }

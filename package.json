@@ -2,11 +2,11 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "start": "lerna run start --stream",
-    "dev": "lerna run dev --parallel",
-		"check-updates": "npx lerna exec npm run check-updates",
+    "bootstrap": "npx lerna bootstrap",
+    "build": "npx lerna run build",
+    "start": "npx lerna run start --stream",
+    "dev": "npx lerna run dev --parallel",
+    "check-updates": "npx lerna exec npm run check-updates",
     "check-updates-deploy": "npx lerna exec npm run check-updates-deploy"
   },
   "devDependencies": {
