@@ -1,15 +1,15 @@
 import { Flex } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputNumber } from '~/components/ui/input-number';
-import { AlertsContext } from '~/contexts/alerts';
-import { SkuModel } from '~/services/@types/sku';
-import { SkuServiceRest } from '~/services/rest-api/services/sku/sku.service';
+import { useAlerts } from '~/contexts/alerts';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
-  readonly sku: SkuModel;
+  readonly sku: Api.Rest.SkuModel;
   readonly appId: string;
   readonly onSuccess: () => any;
 }
@@ -20,7 +20,7 @@ export const FormUpdateSkuQuantity: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
 
   const formik = useFormik({
     initialValues: {
@@ -32,15 +32,15 @@ export const FormUpdateSkuQuantity: React.FC<Props> = ({
     onSubmit: async (values, { setSubmitting }) => {
       try {
         let quantity = sku?.inventory.quantity - values.quantity;
-        const skuService = new SkuServiceRest({ appId });
-        let data: boolean = false;
+        const skuService = clientRestApi({ appId }).skus();
+        let response = null;
         if (quantity < 0) {
           quantity = quantity * -1;
-          data = await skuService.addQuantity(sku?.id, { quantity });
+          response = await skuService.addQuantity(sku?.id, { quantity });
         } else {
-          data = await skuService.withdrawQuantity(sku?.id, { quantity });
+          response = await skuService.withdrawQuantity(sku?.id, { quantity });
         }
-        if (data) {
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Quantidade atualizada com sucesso!'

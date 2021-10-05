@@ -7,8 +7,8 @@ import { ChartBar } from '~/components/ui/charts/bar';
 import { ChartDoughnut } from '~/components/ui/charts/doughnut';
 import { ChartLine } from '~/components/ui/charts/line';
 import { ChartPie } from '~/components/ui/charts/pie';
-import { AppServiceRest } from '~/services/rest-api/services/app/app.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 const data = [
   {
@@ -77,23 +77,18 @@ export default function Home({ app, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const appService = new AppServiceRest({ context });
-
-  if (!appService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appService.appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
+  const appService = clientRestApi({ context }).apps();
   if (appService.appId) {
     const app = await appService.loadInfos();
-    if (app) {
+    if (app?.data) {
       return {
         props: {
-          app
+          app: app?.data
         }
       };
     }

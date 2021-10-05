@@ -8,6 +8,7 @@ import {
   Stack,
   useDisclosure
 } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useRouter } from 'next/router';
 import React, { memo, useContext, useEffect } from 'react';
 import { PlusIcon } from '~/components/icons';
@@ -16,14 +17,13 @@ import { Card } from '~/components/ui/card';
 import { AppContext } from '~/contexts/app';
 import { useModuleVideos } from '~/hooks/use-module-videos';
 import { useRequest } from '~/hooks/use-request';
-import { ModuleModel } from '~/services/@types/module';
-import { CourseModuleServiceRest } from '~/services/rest-api/services/course-module/course-module.service';
+import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { AddVideo } from '../add-video';
 import { Playlist } from '../playlist';
 
 interface Props {
-  readonly module: ModuleModel;
+  readonly module: Api.Rest.ModuleModel;
   readonly courseId: string;
 }
 
@@ -32,10 +32,13 @@ export const Module: React.FC<Props> = memo(({ module, courseId }) => {
   const firstField = React.useRef();
   const { app } = useContext(AppContext);
   const router = useRouter();
-  const courseModuleService = new CourseModuleServiceRest({
-    courseId,
+  const courseModuleService = clientRestApi({
     appId: app?.id
-  });
+  })
+    .courses()
+    .modules({
+      courseId
+    });
 
   const { videos: playlist, loading } = useModuleVideos({
     appId: app?.id,

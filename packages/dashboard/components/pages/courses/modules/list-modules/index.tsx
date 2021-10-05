@@ -1,10 +1,10 @@
-import { Box } from "@chakra-ui/react";
-import { ModuleModel } from "~/services/@types/module";
-import { Module } from "../module";
-import { NoModule } from "../no-module";
+import { Box } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import { Module } from '../module';
+import { NoModule } from '../no-module';
 
 interface Props {
-  readonly modules: ModuleModel[];
+  readonly modules: Api.Rest.ModuleModel[];
   readonly currentVideoId?: string;
   readonly openAll?: boolean;
 }
@@ -12,7 +12,7 @@ interface Props {
 export const ListModules: React.FC<Props> = ({
   modules,
   currentVideoId,
-  openAll = false,
+  openAll = false
 }) => {
   return (
     <Box width="full">

@@ -1,5 +1,5 @@
 import { currentDevice } from '~/services/device';
-import { AUTH_SERVER_URL } from '../../environments';
+import { URLs } from '@stokei/core';
 import { mountUri } from '../uri/mount-uri';
 
 export const SITE_NAME = 'Stokei';
@@ -32,10 +32,10 @@ const authURI = async (baseURL: string, data: ParamsSocialMediaURI) => {
 };
 
 export const googleAuthURI = (data: ParamsSocialMediaURI) =>
-  authURI(AUTH_SERVER_URL + '/google', data);
+  authURI(URLs.API_AUTH + '/google', data);
 
 export const facebookAuthURI = (data: ParamsSocialMediaURI) =>
-  authURI(AUTH_SERVER_URL + '/facebook', data);
+  authURI(URLs.API_AUTH + '/facebook', data);
 
 export const colors = {
   primary: {

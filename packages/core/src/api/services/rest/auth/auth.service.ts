@@ -1,4 +1,4 @@
-import { baseApiAuthURL } from '@/api/urls'
+import * as URLs from '@/urls'
 import { AxiosResponse } from 'axios'
 import { BaseService, BaseServiceConfig } from '../base-service'
 
@@ -13,7 +13,7 @@ export interface AuthServiceConfig extends BaseServiceConfig {}
 export class AuthServiceRest extends BaseService {
   constructor(data: AuthServiceConfig) {
     super({
-      baseURL: baseApiAuthURL,
+      baseURL: URLs.API_AUTH,
       ...data
     })
   }

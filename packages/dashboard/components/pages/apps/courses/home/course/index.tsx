@@ -1,15 +1,14 @@
 import { AvatarGroup, Flex, Text } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 import { AppAvatar } from '~/components/ui/app-avatar';
 import { ButtonOutlined } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
-import { CourseAvatar } from '~/components/ui/course-avatar';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { CourseModel } from '~/services/@types/course';
 
 interface Props {
-  readonly course: CourseModel;
+  readonly course: Api.Rest.CourseModel;
   readonly appId: string;
 }
 

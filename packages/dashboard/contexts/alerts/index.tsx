@@ -1,51 +1,34 @@
-import React, { useCallback, useState } from "react";
-import { Alerts } from "~/components/layouts/alerts";
+import { useToast } from '@chakra-ui/react';
+import React, { useCallback } from 'react';
+import { mapToastData, ToastData } from '~/components/ui/toast';
 
-export interface AlertModel {
-  readonly title?: string;
-  readonly text: string;
-  readonly status: "info" | "warning" | "success" | "error";
-}
+export type AlertModel = ToastData;
 
 export interface AlertsContextValues {
-  readonly alerts: AlertModel[];
-  readonly addAlert?: (alert: AlertModel) => AlertModel;
-  readonly removeAlert?: (index: number) => AlertModel;
+  readonly addAlert?: (alert: AlertModel) => void;
 }
 
-export const AlertsContext = React.createContext<AlertsContextValues>({
-  alerts: [],
-});
+export const AlertsContext = React.createContext({} as AlertsContextValues);
+
+export const useAlerts = () => useAlerts();
 
 const AlertsContextProvider: React.FC = ({ children }) => {
-  const [alerts, setAlerts] = useState([]);
+  const toast = useToast();
 
-  const addAlert = useCallback((alert: AlertModel) => {
-    setAlerts((old) => [...old, alert]);
-    return alert;
-  }, []);
-
-  const removeAlert = useCallback(
-    (index: number) => {
-      const alert = alerts[index];
-      if (alert) {
-        setAlerts((old) => old.filter((_, i) => i !== index));
-      }
-      return alert;
+  const addAlert = useCallback(
+    (alert: AlertModel) => {
+      toast(mapToastData(alert));
     },
-    [alerts]
+    [toast]
   );
 
   return (
     <AlertsContext.Provider
       value={{
-        alerts,
-        addAlert,
-        removeAlert,
+        addAlert
       }}
     >
       {children}
-      <Alerts />
     </AlertsContext.Provider>
   );
 };

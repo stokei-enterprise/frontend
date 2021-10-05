@@ -1,11 +1,11 @@
-import { Flex, Stack } from "@chakra-ui/react";
-import { Card } from "~/components/ui/card";
-import { MaterialModel } from "~/services/@types/material";
-import { Material } from "../material";
-import { NoMaterial } from "../no-material";
+import { Flex, Stack } from '@chakra-ui/react';
+import { Card } from '~/components/ui/card';
+import { Api } from '@stokei/core';
+import { Material } from '../material';
+import { NoMaterial } from '../no-material';
 
 interface Props {
-  readonly materials: MaterialModel[];
+  readonly materials: Api.Rest.MaterialModel[];
 }
 
 export const ListMaterials: React.FC<Props> = ({ materials }) => {

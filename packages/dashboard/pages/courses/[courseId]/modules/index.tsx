@@ -4,8 +4,8 @@ import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/pages/courses/layout';
 import { Header } from '~/components/pages/courses/modules/header';
 import { ListModules } from '~/components/pages/courses/modules/list-modules';
-import { CourseModuleServiceRest } from '~/services/rest-api/services/course-module/course-module.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ modules, courseId, ...props }) {
   return (
@@ -19,24 +19,22 @@ export default function Home({ modules, courseId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
+  }
+
   const courseId = context?.params?.courseId
     ? context?.params?.courseId + ''
     : '';
 
-  const moduleService = new CourseModuleServiceRest({ context, courseId });
-  if (!moduleService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(moduleService.appId),
-        permanent: false
-      }
-    };
-  }
-
+  const moduleService = clientRestApi({ context })
+    .courses()
+    .modules({ courseId });
   const modules = await moduleService.findAll();
   return {
     props: {
-      modules: modules || [],
+      modules: modules?.data || [],
       courseId
     }
   };

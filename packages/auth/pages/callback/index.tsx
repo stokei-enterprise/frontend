@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { RootLayout } from '~/components/layouts/root';
 import { BoxResponse } from '~/components/pages/callback/box-response';
 import { Header } from '~/components/pages/callback/header';
-import { DASHBOARD_URL } from '~/environments';
+import { URLs } from '@stokei/core';
 import { setToken } from '~/utils/auth';
 import { colors } from '~/utils/constants';
 
@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     : null;
   const redirectUri = context?.query?.redirectUri
     ? (context?.query?.redirectUri + '').trim()
-    : DASHBOARD_URL;
+    : URLs.FRONTEND_DASHBOARD;
 
   if (token) {
     setToken(token, context);

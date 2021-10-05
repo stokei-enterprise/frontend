@@ -8,15 +8,15 @@ import {
   Flex,
   Heading,
   Text
-} from "@chakra-ui/react";
-import React from "react";
-import { SkuModel } from "~/services/@types/sku";
-import { FormUpdatePrice } from "~/components/forms/form-update-price";
-import { FormUpdateSkuQuantity } from "~/components/forms/form-update-sku-quantity";
-import { useSkuPrices } from "~/hooks/use-sku-prices";
+} from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import React from 'react';
+import { FormUpdatePrice } from '~/components/forms/form-update-price';
+import { FormUpdateSkuQuantity } from '~/components/forms/form-update-sku-quantity';
+import { useSkuPrices } from '~/hooks/use-sku-prices';
 
 interface Props {
-  readonly plan: SkuModel;
+  readonly plan: Api.Rest.SkuModel;
   readonly appId: string;
   readonly isOpen: boolean;
   readonly onClose: () => any;
@@ -35,7 +35,7 @@ export const UpdatePlan: React.FC<Props> = ({
 }) => {
   const { prices, loading: loadingPrices } = useSkuPrices({
     skuId: plan.id,
-    appId,
+    appId
   });
   return (
     <Drawer
@@ -51,7 +51,7 @@ export const UpdatePlan: React.FC<Props> = ({
         <DrawerHeader borderBottomWidth="1px">Alterar assinatura</DrawerHeader>
 
         <DrawerBody>
-          {plan?.inventory?.type && plan.inventory.type !== "infinite" && (
+          {plan?.inventory?.type && plan.inventory.type !== 'infinite' && (
             <Flex flexDir="column" marginBottom="5">
               <Heading size="lg" marginBottom="2" lineHeight="shorter">
                 Estoque

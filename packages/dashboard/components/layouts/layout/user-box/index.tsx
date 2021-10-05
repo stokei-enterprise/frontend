@@ -17,7 +17,6 @@ import { LogoutIcon, SettingIcon, UserIcon } from '~/components/icons';
 import { Link } from '~/components/layouts/layout/menu/link';
 import { UserAvatar } from '~/components/ui/user-avatar';
 import { AuthContext } from '~/contexts/auth';
-import { AUTH_FRONTEND_URL } from '~/environments';
 import { logoutUrl } from '~/utils/constants';
 
 interface Props {}

@@ -1,15 +1,14 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Button } from '@stokei/ui';
 import { GetServerSideProps } from 'next';
 import router from 'next/router';
 import { useCallback, useContext, useEffect } from 'react';
 import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/layout';
-//import { Button } from '~/components/ui/button';
 import { AuthContext } from '~/contexts/auth';
-import { AUTH_FRONTEND_URL } from '~/environments';
-import { MeServiceRest } from '~/services/rest-api/services/me/me.service';
+import { authUrl } from '~/utils/constants';
+import { getAuth } from '~/utils/is-auth';
 import { mountUri } from '~/utils/uri/mount-uri';
-import { Button } from '@stokei/ui';
 
 export default function Home({ ...props }) {
   const { authenticated } = useContext(AuthContext);
@@ -24,7 +23,7 @@ export default function Home({ ...props }) {
     let values = window.location.href.split('/');
     await values.pop();
     const redirectUri = values.join('/');
-    const href = await mountUri(AUTH_FRONTEND_URL, [
+    const href = await mountUri(authUrl, [
       {
         key: 'redirectUri',
         value: redirectUri
@@ -58,8 +57,8 @@ export default function Home({ ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const meService = new MeServiceRest({ context });
-  if (meService.accessToken) {
+  const auth = await getAuth({ context });
+  if (auth.user) {
     return {
       redirect: {
         destination: '/',

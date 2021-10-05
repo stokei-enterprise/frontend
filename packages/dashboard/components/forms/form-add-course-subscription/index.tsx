@@ -1,4 +1,5 @@
 import { Flex, Icon, Text } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
 import React, { useCallback, useContext } from 'react';
 import * as Yup from 'yup';
@@ -9,12 +10,12 @@ import { Input } from '~/components/ui/input';
 import { InputSearch } from '~/components/ui/input-search';
 import { Select } from '~/components/ui/select';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { AlertsContext } from '~/contexts/alerts';
+import { useAlerts } from '~/contexts/alerts';
 import { AuthContext } from '~/contexts/auth';
 import { CourseContext } from '~/contexts/course';
-import { UserModel } from '~/services/@types/user';
-import { CourseSubscriptionServiceRest } from '~/services/rest-api/services/course-subscription/course-subscription.service';
-import { UserServiceRest } from '~/services/rest-api/services/user/user.service';
+import { clientRestApi } from '~/services/rest-api';
+
+type UserModel = Api.Rest.UserModel;
 
 interface Props {
   readonly onSuccess: () => any;
@@ -24,7 +25,7 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
   const { app, course } = useContext(CourseContext);
   const { user } = useContext(AuthContext);
 
@@ -40,11 +41,13 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const courseSubscriptionService = new CourseSubscriptionServiceRest({
-          courseId: course?.id,
+        const courseSubscriptionService = clientRestApi({
           appId: app?.id
-        });
-        const data = await courseSubscriptionService.create({
+        })
+          .courses()
+          .subscriptions({ courseId: course?.id });
+
+        const response = await courseSubscriptionService.create({
           userId: values.userId,
           type: values.type,
           recurring: {
@@ -52,7 +55,7 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
             type: values.recurringType
           }
         });
-        if (data) {
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Usuário adicionado com sucesso!'
@@ -76,13 +79,13 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
       if (!text) {
         return [];
       }
-      const userService = new UserServiceRest({ appId: app?.id });
+      const userService = clientRestApi({ appId: app?.id }).users();
       const response = await userService.findAll({ fullname: text, limit: 25 });
-      const items = response?.items;
+      const items = response?.data?.items;
       if (!items?.length) {
         return [];
       }
-      return response.items.filter((item) => item?.id !== user?.id);
+      return items.filter((item) => item?.id !== user?.id);
     },
     [app, user]
   );

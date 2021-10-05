@@ -1,20 +1,16 @@
-import { Flex, Heading, Image, Link, Stack } from "@chakra-ui/react";
-import { memo } from "react";
-import { MaterialModel } from "~/services/@types/material";
-import { colors } from "~/styles/colors";
-import { assetsIconsUrl } from "~/utils/constants";
+import { Flex, Heading, Image, Link, Stack } from '@chakra-ui/react';
+import { memo } from 'react';
+import { Api } from '@stokei/core';
+import { colors } from '~/styles/colors';
+import { assetsIconsUrl } from '~/utils/constants';
 
 interface Props {
-  readonly material: MaterialModel;
+  readonly material: Api.Rest.MaterialModel;
 }
 
 export const Material: React.FC<Props> = memo(({ material }) => {
   return (
-    <Stack
-      direction="row"
-      align="center"
-      justify="space-between"
-    >
+    <Stack direction="row" align="center" justify="space-between">
       <Stack direction="row" align="center" spacing={5}>
         <Image
           height="50px"

@@ -1,4 +1,5 @@
 import { Flex, Stack } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import { Container } from '~/components/layouts/container';
@@ -8,16 +9,13 @@ import { Description } from '~/components/pages/courses/videos/description';
 import { Title } from '~/components/pages/courses/videos/title';
 import { Card } from '~/components/ui/card';
 import { VideoPlayer } from '~/components/ui/video-player';
-import { ModuleModel } from '~/services/@types/module';
-import { VideoModel } from '~/services/@types/video';
-import { CourseModuleServiceRest } from '~/services/rest-api/services/course-module/course-module.service';
-import { VideoServiceRest } from '~/services/rest-api/services/video/video.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 interface Props {
   readonly courseId: string;
-  readonly video: VideoModel;
-  readonly modules: ModuleModel[];
+  readonly video: Api.Rest.VideoModel;
+  readonly modules: Api.Rest.ModuleModel[];
 }
 export default function Home({ video, courseId, modules, ...props }: Props) {
   return (
@@ -55,32 +53,30 @@ export default function Home({ video, courseId, modules, ...props }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const videoService = new VideoServiceRest({ context });
-  if (!videoService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(videoService.appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
   const courseId = context?.params?.courseId
     ? context?.params?.courseId + ''
     : '';
   const videoId = context?.params?.videoId ? context?.params?.videoId + '' : '';
+
+  const clientApi = clientRestApi({ context });
+  const videoService = clientApi.videos();
   const video = await videoService.findById(videoId);
-  if (!video) {
+  if (!video?.data) {
     return {
       notFound: true
     };
   }
-  const moduleService = new CourseModuleServiceRest({ context, courseId });
-
+  const moduleService = clientApi.courses().modules({ courseId });
+  const modules = (await moduleService.findAll())?.data || [];
   return {
     props: {
       video,
-      modules: (await moduleService.findAll()) || [],
+      modules,
       courseId
     }
   };

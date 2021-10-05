@@ -1,15 +1,14 @@
-import { Flex, Heading, Icon, Skeleton, Stack } from '@chakra-ui/react';
+import { Flex, Heading, Skeleton, Stack } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import React, { memo, useContext, useState } from 'react';
-import { ArrowDownIcon, ArrowUpIcon } from '~/components/icons';
 import { Card } from '~/components/ui/card';
 import { AppContext } from '~/contexts/app';
 import { useModuleVideos } from '~/hooks/use-module-videos';
-import { ModuleModel } from '~/services/@types/module';
 import { colors } from '~/styles/colors';
 import { Playlist } from '../playlist';
 
 interface Props {
-  readonly module: ModuleModel;
+  readonly module: Api.Rest.ModuleModel;
   readonly open?: boolean;
   readonly currentVideoId?: string;
 }

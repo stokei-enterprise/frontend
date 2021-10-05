@@ -1,15 +1,9 @@
-import { Flex, Stack, Icon, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading, Icon, Stack, Text } from '@chakra-ui/react';
 import { Steps } from 'antd';
 import { useFormik } from 'formik';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import * as Yup from 'yup';
-import {
-  BankAccountIcon,
-  ContactIcon,
-  EmailIcon,
-  InfoIcon,
-  SmileIcon
-} from '~/components/icons';
+import { BankAccountIcon, ContactIcon, InfoIcon } from '~/components/icons';
 import { Button, ButtonOutlined } from '~/components/ui/button';
 import {
   Input,
@@ -18,7 +12,7 @@ import {
   InputPhoneOnChangeData
 } from '~/components/ui/input';
 import Select from '~/components/ui/select';
-import { AlertsContext } from '~/contexts/alerts';
+import { useAlerts } from '~/contexts/alerts';
 import { clientRestApi } from '~/services/rest-api';
 import { formatAppNickname } from '~/utils/format-app-nickname';
 import { formatCnpj } from '~/utils/format-cnpj';
@@ -58,7 +52,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
   ...props
 }) => {
   const [current, setCurrent] = React.useState(0);
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
 
   const handleNext = useCallback(() => {
     setCurrent((curr) => curr + 1);
@@ -104,7 +98,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const appService = clientRestApi().apps();
-        const data = await appService.create({
+        const response = await appService.create({
           name: values.name,
           nickname: (values.nickname || '').toLowerCase(),
           email: values.email,
@@ -129,7 +123,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
             number: values.phoneNumber
           }
         });
-        if (data) {
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Aplicação criada com sucesso!'

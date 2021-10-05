@@ -12,8 +12,8 @@ import { SubscriptionsServiceRest } from './subscriptions/subscriptions.service'
 import { UsersServiceRest } from './users/users.service'
 import { VideosServiceRest } from './videos/videos.service'
 
-export * as Models from './@types'
-export * as Interfaces from './interfaces'
+export * from './@types'
+export * from './interfaces'
 
 export interface ClientRestAPIInstance {
   readonly auth: () => AuthServiceRest

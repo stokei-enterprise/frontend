@@ -1,10 +1,10 @@
 import { memo } from 'react';
 import { Card } from '~/components/ui/card';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { UserModel } from '~/services/@types/user';
+import { Api } from '@stokei/core';
 
 interface Props {
-  readonly user: UserModel;
+  readonly user: Api.Rest.UserModel;
 }
 
 export const User: React.FC<Props> = memo(({ user }) => {

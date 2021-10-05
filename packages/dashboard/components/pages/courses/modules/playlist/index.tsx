@@ -1,10 +1,10 @@
 import { Box, Stack, Text } from '@chakra-ui/react';
-import { VideoModel } from '~/services/@types/video';
+import { Api } from '@stokei/core';
 import { Video } from '../video';
 
 interface Props {
   readonly moduleId: string;
-  readonly videos: VideoModel[];
+  readonly videos: Api.Rest.VideoModel[];
   readonly currentVideoId?: string;
 }
 

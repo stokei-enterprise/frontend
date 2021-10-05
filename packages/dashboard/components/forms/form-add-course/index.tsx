@@ -1,4 +1,5 @@
 import { Flex, Icon, Stack } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -11,14 +12,14 @@ import { InputSearch } from '~/components/ui/input-search';
 import { Select } from '~/components/ui/select';
 import { TextEditor } from '~/components/ui/text-editor';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { AlertsContext } from '~/contexts/alerts';
+import { useAlerts } from '~/contexts/alerts';
 import { AuthContext } from '~/contexts/auth';
 import { useCategories } from '~/hooks/use-categories';
-import { UserModel } from '~/services/@types/user';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { UserServiceRest } from '~/services/rest-api/services/user/user.service';
+import { clientRestApi } from '~/services/rest-api';
 import { ASPECT_RATIO_COURSES } from '~/utils/constants';
 import { Teacher, TeacherData } from './teacher';
+
+type UserModel = Api.Rest.UserModel;
 
 interface Props {
   readonly appId: string;
@@ -31,7 +32,7 @@ export const FormAddCourse: React.FC<Props> = ({
   ...props
 }) => {
   const [teachers, setTeachers] = useState<TeacherData[]>([]);
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
   const { user } = useContext(AuthContext);
   const { categories } = useCategories();
 
@@ -57,9 +58,9 @@ export const FormAddCourse: React.FC<Props> = ({
         formData.append('teachers', JSON.stringify(values.teachers));
         formData.append('image', values.image);
 
-        const courseService = new CourseServiceRest({ appId });
-        const data = await courseService.create(formData);
-        if (data) {
+        const courseService = clientRestApi({ appId }).courses();
+        const response = await courseService.create(formData);
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Curso criado com sucesso!'
@@ -134,12 +135,12 @@ export const FormAddCourse: React.FC<Props> = ({
     if (!text) {
       return [];
     }
-    const userService = new UserServiceRest({});
+    const userService = clientRestApi({}).users();
     const response = await userService.findAll({ fullname: text, limit: 25 });
-    if (!response?.items?.length) {
+    if (!response?.data?.items?.length) {
       return [];
     }
-    return response?.items;
+    return response.data.items;
   }, []);
 
   return (

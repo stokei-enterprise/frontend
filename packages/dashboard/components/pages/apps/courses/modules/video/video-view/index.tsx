@@ -5,14 +5,14 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalOverlay,
-} from "@chakra-ui/react";
-import { VideoModel } from "~/services/@types/video";
-import { VideoPlayer } from "~/components/ui/video-player";
-import { Markdown } from "~/components/ui/markdown";
+  ModalOverlay
+} from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import { VideoPlayer } from '~/components/ui/video-player';
+import { Markdown } from '~/components/ui/markdown';
 
 interface Props {
-  readonly video: VideoModel;
+  readonly video: Api.Rest.VideoModel;
   readonly isOpen: boolean;
   readonly onClose: () => any;
 }

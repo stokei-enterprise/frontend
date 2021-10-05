@@ -1,11 +1,11 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
-import { VideoModel } from '~/services/@types/video';
+import { Api } from '@stokei/core';
 import { Video } from '../video';
 
 interface Props {
   readonly moduleName: string;
   readonly moduleId: string;
-  readonly videos: VideoModel[];
+  readonly videos: Api.Rest.VideoModel[];
 }
 
 export const Playlist: React.FC<Props> = ({ videos, moduleId, moduleName }) => {

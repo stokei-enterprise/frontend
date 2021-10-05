@@ -4,8 +4,8 @@ import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/pages/courses/layout';
 import { Header } from '~/components/pages/courses/materials/header';
 import { ListMaterials } from '~/components/pages/courses/materials/list-materials';
-import { CourseMaterialServiceRest } from '~/services/rest-api/services/course-material/course-material.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ materials, courseId, ...props }) {
   return (
@@ -19,24 +19,22 @@ export default function Home({ materials, courseId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
+  }
+
   const courseId = context?.params?.courseId
     ? context?.params?.courseId + ''
     : '';
 
-  const materialService = new CourseMaterialServiceRest({ context, courseId });
-  if (!materialService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(materialService.appId),
-        permanent: false
-      }
-    };
-  }
-
+  const materialService = clientRestApi({ context })
+    .courses()
+    .materials({ courseId });
   const materials = await materialService.findAll();
   return {
     props: {
-      materials: materials || [],
+      materials: materials?.data || [],
       courseId
     }
   };

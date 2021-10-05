@@ -1,14 +1,13 @@
 import { Flex } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFile } from '~/components/ui/input-file';
-import { InputFileImage } from '~/components/ui/input-file-image';
 import { Textarea } from '~/components/ui/textarea';
-import { AlertsContext } from '~/contexts/alerts';
-import { CourseMaterialServiceRest } from '~/services/rest-api/services/course-material/course-material.service';
+import { useAlerts } from '~/contexts/alerts';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
   readonly courseId: string;
@@ -22,7 +21,7 @@ export const FormAddCourseMaterial: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
 
   const formik = useFormik({
     initialValues: { description: '', title: '', material: null },
@@ -37,12 +36,14 @@ export const FormAddCourseMaterial: React.FC<Props> = ({
         formData.append('description', values.description);
         formData.append('material', values.material);
 
-        const courseMaterialService = new CourseMaterialServiceRest({
-          courseId,
+        const courseMaterialService = clientRestApi({
           appId
-        });
-        const data = await courseMaterialService.create(formData);
-        if (data) {
+        })
+          .courses()
+          .materials({ courseId });
+
+        const response = await courseMaterialService.create(formData);
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Material criado com sucesso!'

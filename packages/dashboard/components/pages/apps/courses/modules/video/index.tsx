@@ -1,12 +1,12 @@
 import { Badge, Flex, Heading, Image, useDisclosure } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useRouter } from 'next/router';
 import React, { memo, useContext, useEffect, useMemo } from 'react';
 import { Card } from '~/components/ui/card';
 import { Markdown } from '~/components/ui/markdown';
 import { AppContext } from '~/contexts/app';
 import { useRequest } from '~/hooks/use-request';
-import { VideoModel } from '~/services/@types/video';
-import { CourseVideoServiceRest } from '~/services/rest-api/services/course-video/course-video.service';
+import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { UpdateVideo } from '../update-video';
 import styles from './style.module.css';
@@ -14,7 +14,7 @@ import { VideoView } from './video-view';
 
 interface Props {
   readonly moduleName: string;
-  readonly video: VideoModel;
+  readonly video: Api.Rest.VideoModel;
   readonly moduleId: string;
 }
 const statusSchema = {
@@ -45,10 +45,13 @@ export const Video: React.FC<Props> = memo(
     const router = useRouter();
     const firstFieldUpdateVideo = React.useRef();
     const { app } = useContext(AppContext);
-    const courseVideoService = new CourseVideoServiceRest({
-      moduleId,
+    const courseVideoService = clientRestApi({
       appId: app?.id
-    });
+    })
+      .courses()
+      .videos({
+        moduleId
+      });
     const { isOpen, onOpen, onClose } = useDisclosure();
     const {
       isOpen: isOpenUpdateVideo,

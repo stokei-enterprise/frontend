@@ -1,8 +1,7 @@
-import { Flex, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import { Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { AppLogo } from '~/components/ui/app-logo';
 import { Card } from '~/components/ui/card';
-import { UserAvatar } from '~/components/ui/user-avatar';
 import { AuthContext } from '~/contexts/auth';
 import { CourseContext } from '~/contexts/course';
 import { Teacher } from './teacher';

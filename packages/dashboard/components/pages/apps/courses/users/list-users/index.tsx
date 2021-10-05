@@ -1,9 +1,9 @@
 import { SimpleGrid } from '@chakra-ui/react';
-import { UserModel } from '~/services/@types/user';
+import { Api } from '@stokei/core';
 import { User } from '../user';
 
 interface Props {
-  readonly users: UserModel[];
+  readonly users: Api.Rest.UserModel[];
 }
 
 export const ListUsers: React.FC<Props> = ({ users }) => {

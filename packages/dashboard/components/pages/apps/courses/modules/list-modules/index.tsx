@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
-import { ModuleModel } from "~/services/@types/module";
-import { Module } from "../module";
+import { Box } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import { Module } from '../module';
 
 interface Props {
-  readonly modules: ModuleModel[];
+  readonly modules: Api.Rest.ModuleModel[];
   readonly courseId: string;
   readonly appId: string;
 }

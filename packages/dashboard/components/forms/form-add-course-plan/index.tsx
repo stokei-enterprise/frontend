@@ -1,13 +1,13 @@
 import { Flex, Heading, Stack } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputNumber } from '~/components/ui/input-number';
 import { Select } from '~/components/ui/select';
-import { AlertsContext } from '~/contexts/alerts';
-import { CourseSkuServiceRest } from '~/services/rest-api/services/course-sku/course-sku.service';
+import { useAlerts } from '~/contexts/alerts';
+import { clientRestApi } from '~/services/rest-api';
 import { convertToAmount } from '~/utils/convert-to-amount';
 import { convertToMoney } from '~/utils/convert-to-money';
 
@@ -23,7 +23,7 @@ export const FormAddCoursePlan: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addAlert } = useAlerts();
 
   const formik = useFormik({
     initialValues: {
@@ -45,8 +45,13 @@ export const FormAddCoursePlan: React.FC<Props> = ({
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const courseSkuService = new CourseSkuServiceRest({ courseId, appId });
-        const data = await courseSkuService.create({
+        const courseSkuService = clientRestApi({
+          appId
+        })
+          .courses()
+          .skus({ courseId });
+
+        const response = await courseSkuService.create({
           name: values.name,
           code: values.code,
           type: values.type,
@@ -64,7 +69,7 @@ export const FormAddCoursePlan: React.FC<Props> = ({
             quantity: values.inventoryQuantity
           }
         });
-        if (data) {
+        if (response?.data) {
           addAlert({
             status: 'success',
             text: 'Assinatura criada com sucesso!'
