@@ -7,7 +7,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { TextEditor } from '~/components/ui/text-editor';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { CourseContext } from '~/contexts/course';
 import { clientRestApi } from '~/services/rest-api';
 import { ASPECT_RATIO_COURSES } from '~/utils/constants';
@@ -25,7 +25,7 @@ export const FormUpdateCourse: React.FC<Props> = ({
   ...props
 }) => {
   const { setCourseImageUrl } = useContext(CourseContext);
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -52,7 +52,7 @@ export const FormUpdateCourse: React.FC<Props> = ({
         const courseService = clientRestApi({ appId }).courses();
         const response = await courseService.update(course?.id, formData);
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Curso atualizado com sucesso!'
           });
@@ -62,7 +62,7 @@ export const FormUpdateCourse: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar o curso!'
       });

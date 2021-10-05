@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputNumber } from '~/components/ui/input-number';
 import { Select } from '~/components/ui/select';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 import { convertToAmount } from '~/utils/convert-to-amount';
 import { convertToMoney } from '~/utils/convert-to-money';
@@ -23,7 +23,7 @@ export const FormAddCoursePlan: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -70,7 +70,7 @@ export const FormAddCoursePlan: React.FC<Props> = ({
           }
         });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Assinatura criada com sucesso!'
           });
@@ -80,7 +80,7 @@ export const FormAddCoursePlan: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao criar a assinatura!'
       });

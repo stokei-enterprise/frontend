@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { memo, useContext, useEffect, useMemo } from 'react';
 import { ButtonOutlined } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { AppContext } from '~/contexts/app';
 import { useStartSubscription } from '~/hooks/use-start-subscription';
 import { colors } from '~/styles/colors';
@@ -65,7 +65,7 @@ const typeObj = {
 
 export const Subscription: React.FC<Props> = memo(({ subscription }) => {
   const router = useRouter();
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
   const { app } = useContext(AppContext);
 
   const {
@@ -81,19 +81,19 @@ export const Subscription: React.FC<Props> = memo(({ subscription }) => {
   useEffect(() => {
     try {
       if (dataStart) {
-        addAlert({
+        addToast({
           text: 'Iniciado com sucesso!',
           status: 'success'
         });
         router.reload();
       } else if (errorStart) {
-        addAlert({
+        addToast({
           text: 'Erro ao iniciar a assinatura!',
           status: 'error'
         });
       }
     } catch (error) {}
-  }, [dataStart, errorStart, addAlert, router]);
+  }, [dataStart, errorStart, addToast, router]);
 
   const status: {
     colorScheme: string;

@@ -5,7 +5,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 import { formatCpf } from '~/utils/format-cpf';
 import { formatBirthdayDateISO } from '~/utils/format-date';
@@ -21,7 +21,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
   user,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
   const formik = useFormik({
     initialValues: {
       firstname: user?.firstname,
@@ -51,7 +51,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
           dateBirthday: values.dateBirthday
         });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Atualizado com sucesso!'
           });
@@ -61,7 +61,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar os dados!'
       });

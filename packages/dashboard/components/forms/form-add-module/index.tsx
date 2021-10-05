@@ -4,7 +4,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
@@ -19,7 +19,7 @@ export const FormAddModule: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: { name: '', description: '' },
@@ -40,7 +40,7 @@ export const FormAddModule: React.FC<Props> = ({
           description: values.description
         });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Modulo criado com sucesso!'
           });
@@ -50,7 +50,7 @@ export const FormAddModule: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao criar este módulo!'
       });

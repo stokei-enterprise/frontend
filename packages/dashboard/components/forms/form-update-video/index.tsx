@@ -7,7 +7,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { TextEditor } from '~/components/ui/text-editor';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
@@ -24,7 +24,7 @@ export const FormUpdateVideo: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const [percentLoading, setPercentLoading] = useState(0);
 
@@ -61,7 +61,7 @@ export const FormUpdateVideo: React.FC<Props> = ({
           });
         const response = await courseVideoService.update(video.id, formData);
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Video atualizado com sucesso!'
           });
@@ -71,7 +71,7 @@ export const FormUpdateVideo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar este video!'
       });

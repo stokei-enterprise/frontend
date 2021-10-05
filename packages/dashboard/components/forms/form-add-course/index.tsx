@@ -12,7 +12,7 @@ import { InputSearch } from '~/components/ui/input-search';
 import { Select } from '~/components/ui/select';
 import { TextEditor } from '~/components/ui/text-editor';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { AuthContext } from '~/contexts/auth';
 import { useCategories } from '~/hooks/use-categories';
 import { clientRestApi } from '~/services/rest-api';
@@ -32,7 +32,7 @@ export const FormAddCourse: React.FC<Props> = ({
   ...props
 }) => {
   const [teachers, setTeachers] = useState<TeacherData[]>([]);
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
   const { user } = useContext(AuthContext);
   const { categories } = useCategories();
 
@@ -61,7 +61,7 @@ export const FormAddCourse: React.FC<Props> = ({
         const courseService = clientRestApi({ appId }).courses();
         const response = await courseService.create(formData);
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Curso criado com sucesso!'
           });
@@ -71,7 +71,7 @@ export const FormAddCourse: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao criar o curso!'
       });

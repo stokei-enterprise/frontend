@@ -12,7 +12,7 @@ import {
   InputPhoneOnChangeData
 } from '~/components/ui/input';
 import Select from '~/components/ui/select';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 import { formatAppNickname } from '~/utils/format-app-nickname';
 import { formatCnpj } from '~/utils/format-cnpj';
@@ -52,7 +52,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
   ...props
 }) => {
   const [current, setCurrent] = React.useState(0);
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const handleNext = useCallback(() => {
     setCurrent((curr) => curr + 1);
@@ -124,7 +124,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
           }
         });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Aplicação criada com sucesso!'
           });
@@ -134,7 +134,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao sua aplicação, verifique os seus dados!'
       });

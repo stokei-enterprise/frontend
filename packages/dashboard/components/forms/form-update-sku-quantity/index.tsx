@@ -5,7 +5,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputNumber } from '~/components/ui/input-number';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
@@ -20,7 +20,7 @@ export const FormUpdateSkuQuantity: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -41,7 +41,7 @@ export const FormUpdateSkuQuantity: React.FC<Props> = ({
           response = await skuService.withdrawQuantity(sku?.id, { quantity });
         }
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Quantidade atualizada com sucesso!'
           });
@@ -51,7 +51,7 @@ export const FormUpdateSkuQuantity: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar a quantidade!'
       });

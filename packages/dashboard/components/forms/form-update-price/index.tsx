@@ -5,7 +5,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputNumber } from '~/components/ui/input-number';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { convertToMoney } from '~/utils/convert-to-money';
@@ -22,7 +22,7 @@ export const FormUpdatePrice: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -54,7 +54,7 @@ export const FormUpdatePrice: React.FC<Props> = ({
         }
 
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Preço alterado com sucesso!'
           });
@@ -64,7 +64,7 @@ export const FormUpdatePrice: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao alterar o preço!'
       });

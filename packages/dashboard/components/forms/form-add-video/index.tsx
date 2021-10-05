@@ -7,7 +7,7 @@ import { Input } from '~/components/ui/input';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { InputFileVideo } from '~/components/ui/input-file-video';
 import { TextEditor } from '~/components/ui/text-editor';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
@@ -22,7 +22,7 @@ export const FormAddVideo: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const [percentLoading, setPercentLoading] = useState(0);
 
@@ -57,7 +57,7 @@ export const FormAddVideo: React.FC<Props> = ({
           });
         const response = await courseVideoService.create(formData);
         if (response) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Video adicionado com sucesso!'
           });
@@ -67,7 +67,7 @@ export const FormAddVideo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao adicionar este video!'
       });

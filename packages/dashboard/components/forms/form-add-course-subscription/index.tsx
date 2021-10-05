@@ -10,7 +10,7 @@ import { Input } from '~/components/ui/input';
 import { InputSearch } from '~/components/ui/input-search';
 import { Select } from '~/components/ui/select';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { AuthContext } from '~/contexts/auth';
 import { CourseContext } from '~/contexts/course';
 import { clientRestApi } from '~/services/rest-api';
@@ -25,7 +25,7 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
   const { app, course } = useContext(CourseContext);
   const { user } = useContext(AuthContext);
 
@@ -56,7 +56,7 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
           }
         });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Usuário adicionado com sucesso!'
           });
@@ -66,7 +66,7 @@ export const FormAddCourseSubscription: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao adicionar o usuário!'
       });

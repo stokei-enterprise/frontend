@@ -6,7 +6,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFile } from '~/components/ui/input-file';
 import { Textarea } from '~/components/ui/textarea';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
@@ -21,7 +21,7 @@ export const FormAddCourseMaterial: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: { description: '', title: '', material: null },
@@ -44,7 +44,7 @@ export const FormAddCourseMaterial: React.FC<Props> = ({
 
         const response = await courseMaterialService.create(formData);
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Material criado com sucesso!'
           });
@@ -54,7 +54,7 @@ export const FormAddCourseMaterial: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao adicionar o material!'
       });

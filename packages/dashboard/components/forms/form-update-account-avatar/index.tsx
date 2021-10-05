@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { useAlerts } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { AuthContext } from '~/contexts/auth';
 import { Api } from '@stokei/core';
 import { clientRestApi } from '~/services/rest-api';
@@ -20,7 +20,7 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useAlerts();
+  const { addToast } = useToasts();
   const { setAvatarUrl } = useContext(AuthContext);
 
   const formik = useFormik({
@@ -35,7 +35,7 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
 
         const response = await meService.updateAvatar({ image: values.image });
         if (response?.data) {
-          addAlert({
+          addToast({
             status: 'success',
             text: 'Foto alterada com sucesso!'
           });
@@ -45,7 +45,7 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao alterar a foto do perfil!'
       });
