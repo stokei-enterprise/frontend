@@ -11,7 +11,7 @@ export interface ToastData {
 export const mapToastData = (data: ToastData): UseToastOptions => ({
   title: data?.title,
   description: data?.text,
-  duration: 3000,
+  duration: 5000,
   status: data.status,
   isClosable: true,
   variant: 'subtle',
