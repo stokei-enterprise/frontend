@@ -2,12 +2,11 @@ import { GetServerSideProps } from 'next';
 import Router from 'next/router';
 import { FormUpdateAccountAvatar } from '~/components/forms/form-update-account-avatar';
 import { Layout } from '~/components/layouts/settings/layout';
-import { UserModel } from '~/services/@types/user';
-import { MeServiceRest } from '~/services/rest-api/services/me/me.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { Api } from '@stokei/core';
+import { getAuth } from '~/utils/is-auth';
 
 interface Props {
-  readonly user: UserModel;
+  readonly user: Api.Rest.MeModel;
 }
 
 export default function Home({ user, ...props }: Props) {
@@ -19,25 +18,12 @@ export default function Home({ user, ...props }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const meService = new MeServiceRest({ context });
-  if (!meService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(meService.appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const user = await meService.load();
-  if (!user) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(meService.appId),
-        permanent: false
-      }
-    };
-  }
+  const user = auth.user;
   return {
     props: {
       user

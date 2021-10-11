@@ -3,8 +3,8 @@ import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/root/layout';
 import { Header } from '~/components/pages/courses/home/header';
 import { ListCourses } from '~/components/pages/courses/home/list-courses';
-import { MeServiceRest } from '~/services/rest-api/services/me/me.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ courses, ...props }) {
   return (
@@ -18,20 +18,15 @@ export default function Home({ courses, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const meService = new MeServiceRest({ context });
-  if (!meService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(meService.appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const courses = await meService.courses();
+  const courses = await clientRestApi({ context }).me().courses({}).findAll();
   return {
     props: {
-      courses
+      courses: courses?.data?.items || []
     }
   };
 };

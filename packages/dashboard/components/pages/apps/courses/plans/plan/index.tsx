@@ -6,14 +6,14 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useRouter } from 'next/router';
 import React, { memo, useEffect, useMemo } from 'react';
 import { ButtonOutlined } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
 import { useRequest } from '~/hooks/use-request';
 import { useSkuPrices } from '~/hooks/use-sku-prices';
-import { SkuModel } from '~/services/@types/sku';
-import { CourseSkuServiceRest } from '~/services/rest-api/services/course-sku/course-sku.service';
+import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { convertToMoney } from '~/utils/convert-to-money';
 import { UpdatePlan } from '../update-plan';
@@ -21,7 +21,7 @@ import { UpdatePlan } from '../update-plan';
 interface Props {
   readonly appId: string;
   readonly courseId: string;
-  readonly plan: SkuModel;
+  readonly plan: Api.Rest.SkuModel;
 }
 
 const status = {
@@ -62,10 +62,13 @@ export const Plan: React.FC<Props> = memo(({ plan, courseId, appId }) => {
   const router = useRouter();
   const refUpdatePlan = React.useRef();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const courseSkuService = new CourseSkuServiceRest({
-    appId,
-    courseId
-  });
+  const courseSkuService = clientRestApi({
+    appId
+  })
+    .courses()
+    .skus({
+      courseId
+    });
 
   const { prices, loading: loadingPrices } = useSkuPrices({
     appId,

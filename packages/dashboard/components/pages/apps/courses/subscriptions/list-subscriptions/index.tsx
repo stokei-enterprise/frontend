@@ -1,10 +1,10 @@
 import { Flex, SimpleGrid } from '@chakra-ui/react';
-import { SubscriptionModel } from '~/services/@types/subscription';
+import { Api } from '@stokei/core';
 import { NoSubscription } from '../no-subscription';
 import { Subscription } from '../subscription';
 
 interface Props {
-  readonly subscriptions: SubscriptionModel[];
+  readonly subscriptions: Api.Rest.SubscriptionModel[];
 }
 
 export const ListSubscriptions: React.FC<Props> = ({ subscriptions }) => {

@@ -1,17 +1,17 @@
-import { Flex, Heading } from "@chakra-ui/react";
-import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
-import * as Yup from "yup";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { InputFileImage } from "~/components/ui/input-file-image";
-import { TextEditor } from "~/components/ui/text-editor";
-import { AlertsContext } from "~/contexts/alerts";
-import { VideoModel } from "~/services/@types/video";
-import { CourseVideoServiceRest } from "~/services/rest-api/services/course-video/course-video.service";
+import { Flex, Heading } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import { useFormik } from 'formik';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { InputFileImage } from '~/components/ui/input-file-image';
+import { TextEditor } from '~/components/ui/text-editor';
+import { useToasts } from '~/contexts/toasts';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
-  readonly video: VideoModel;
+  readonly video: Api.Rest.VideoModel;
   readonly appId: string;
   readonly moduleId: string;
   readonly onSuccess: () => any;
@@ -24,7 +24,7 @@ export const FormUpdateVideo: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
 
   const [percentLoading, setPercentLoading] = useState(0);
 
@@ -32,35 +32,38 @@ export const FormUpdateVideo: React.FC<Props> = ({
     initialValues: {
       title: video.title,
       description: video.description,
-      thumbnail: null,
+      thumbnail: null
     },
     validationSchema: Yup.object({
       title: Yup.string(),
-      description: Yup.string(),
+      description: Yup.string()
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const formData = new FormData();
         if (values.title) {
-          formData.append("title", values.title);
+          formData.append('title', values.title);
         }
         if (values.description) {
-          formData.append("description", values.description);
+          formData.append('description', values.description);
         }
         if (values.thumbnail) {
-          formData.append("thumbnail", values.thumbnail);
+          formData.append('thumbnail', values.thumbnail);
         }
 
-        const courseVideoService = new CourseVideoServiceRest({
-          moduleId,
+        const courseVideoService = clientRestApi({
           appId,
-          onUploadProgress: setPercentLoading,
-        });
-        const data = await courseVideoService.update(video.id, formData);
-        if (data) {
-          addAlert({
-            status: "success",
-            text: "Video atualizado com sucesso!",
+          onUploadProgress: setPercentLoading
+        })
+          .courses()
+          .videos({
+            moduleId
+          });
+        const response = await courseVideoService.update(video.id, formData);
+        if (response?.data) {
+          addToast({
+            status: 'success',
+            text: 'Video atualizado com sucesso!'
           });
           setSubmitting(false);
           onSuccess();
@@ -68,13 +71,13 @@ export const FormUpdateVideo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
-        status: "error",
-        text: "Erro ao atualizar este video!",
+      addToast({
+        status: 'error',
+        text: 'Erro ao atualizar este video!'
       });
 
       setSubmitting(false);
-    },
+    }
   });
 
   return (
@@ -86,8 +89,8 @@ export const FormUpdateVideo: React.FC<Props> = ({
         <form
           onSubmit={formik.handleSubmit}
           style={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <InputFileImage
@@ -96,11 +99,11 @@ export const FormUpdateVideo: React.FC<Props> = ({
             aspectRatio={1920 / 1080}
             errorMessage={
               formik.touched.thumbnail && formik.errors.thumbnail
-                ? "Miniatura inválida!"
+                ? 'Miniatura inválida!'
                 : null
             }
             onChange={(event) =>
-              formik.setFieldValue("thumbnail", event.target.files[0] || "")
+              formik.setFieldValue('thumbnail', event.target.files[0] || '')
             }
           />
 
@@ -109,9 +112,9 @@ export const FormUpdateVideo: React.FC<Props> = ({
             name="title"
             label="Nome"
             placeholder="Nome"
-            borderColor={formik.errors.title && "red.400"}
+            borderColor={formik.errors.title && 'red.400'}
             errorMessage={formik.touched.title && formik.errors.title}
-            {...formik.getFieldProps("title")}
+            {...formik.getFieldProps('title')}
           />
 
           <TextEditor
@@ -122,8 +125,8 @@ export const FormUpdateVideo: React.FC<Props> = ({
             errorMessage={
               formik.touched.description && formik.errors.description
             }
-            {...formik.getFieldProps("description")}
-            onChange={(value) => formik.setFieldValue("description", value)}
+            {...formik.getFieldProps('description')}
+            onChange={(value) => formik.setFieldValue('description', value)}
           />
 
           <Flex>

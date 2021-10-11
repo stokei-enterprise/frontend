@@ -1,11 +1,11 @@
-import { Flex } from "@chakra-ui/react";
-import { useFormik } from "formik";
-import React, { useContext } from "react";
-import * as Yup from "yup";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { AlertsContext } from "~/contexts/alerts";
-import { CourseModuleServiceRest } from "~/services/rest-api/services/course-module/course-module.service";
+import { Flex } from '@chakra-ui/react';
+import { useFormik } from 'formik';
+import React from 'react';
+import * as Yup from 'yup';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { useToasts } from '~/contexts/toasts';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
   readonly courseId: string;
@@ -19,27 +19,30 @@ export const FormAddModule: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
 
   const formik = useFormik({
-    initialValues: { name: "", description: "" },
+    initialValues: { name: '', description: '' },
     validationSchema: Yup.object({
-      name: Yup.string().required("Obrigatório"),
+      name: Yup.string().required('Obrigatório')
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const courseModuleService = new CourseModuleServiceRest({
-          courseId,
-          appId,
-        });
-        const data = await courseModuleService.create({
+        const courseModuleService = clientRestApi({
+          appId
+        })
+          .courses()
+          .modules({
+            courseId
+          });
+        const response = await courseModuleService.create({
           name: values.name,
-          description: values.description,
+          description: values.description
         });
-        if (data) {
-          addAlert({
-            status: "success",
-            text: "Modulo criado com sucesso!",
+        if (response?.data) {
+          addToast({
+            status: 'success',
+            text: 'Modulo criado com sucesso!'
           });
           setSubmitting(false);
           onSuccess();
@@ -47,12 +50,12 @@ export const FormAddModule: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
-        status: "error",
-        text: "Erro ao criar este módulo!",
+      addToast({
+        status: 'error',
+        text: 'Erro ao criar este módulo!'
       });
       setSubmitting(false);
-    },
+    }
   });
 
   return (
@@ -61,8 +64,8 @@ export const FormAddModule: React.FC<Props> = ({
         <form
           onSubmit={formik.handleSubmit}
           style={{
-            display: "flex",
-            flexDirection: "column",
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <Input
@@ -70,9 +73,9 @@ export const FormAddModule: React.FC<Props> = ({
             name="name"
             label="Nome"
             placeholder="Nome"
-            borderColor={formik.errors.name && "red.400"}
+            borderColor={formik.errors.name && 'red.400'}
             errorMessage={formik.touched.name && formik.errors.name}
-            {...formik.getFieldProps("name")}
+            {...formik.getFieldProps('name')}
           />
 
           <Flex>

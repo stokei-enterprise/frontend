@@ -1,15 +1,15 @@
 import { Flex, Heading, Image, Link } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import NextLink from 'next/link';
 import React, { memo, useContext } from 'react';
 import { Card } from '~/components/ui/card';
 import { Markdown } from '~/components/ui/markdown';
 import { CourseContext } from '~/contexts/course';
-import { VideoModel } from '~/services/@types/video';
 import { colors } from '~/styles/colors';
 import styles from './style.module.css';
 
 interface Props {
-  readonly video: VideoModel;
+  readonly video: Api.Rest.VideoModel;
 }
 
 export const Video: React.FC<Props> = memo(({ video }) => {

@@ -1,17 +1,17 @@
 import { Flex, Stack, Text } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputNumber } from '~/components/ui/input-number';
-import { AlertsContext } from '~/contexts/alerts';
-import { PriceModel } from '~/services/@types/price';
-import { PriceServiceRest } from '~/services/rest-api/services/price/price.service';
+import { useToasts } from '~/contexts/toasts';
+import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { convertToMoney } from '~/utils/convert-to-money';
 
 interface Props {
-  readonly price: PriceModel;
+  readonly price: Api.Rest.PriceModel;
   readonly appId: string;
   readonly onSuccess: () => any;
 }
@@ -22,7 +22,7 @@ export const FormUpdatePrice: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -40,12 +40,12 @@ export const FormUpdatePrice: React.FC<Props> = ({
 
         const isRemove = percentageOff === 0;
 
-        const priceService = new PriceServiceRest({ appId });
-        let data: any;
+        const priceService = clientRestApi({ appId }).prices();
+        let response: any;
         if (isRemove) {
-          data = await priceService.deleteDiscount(price.id);
+          response = await priceService.deleteDiscount(price.id);
         } else {
-          data = await priceService.addDiscount(price.id, {
+          response = await priceService.addDiscount(price.id, {
             discount: {
               name: `%${(percentageOff / 100).toFixed(2)} OFF`,
               percentageOff
@@ -53,8 +53,8 @@ export const FormUpdatePrice: React.FC<Props> = ({
           });
         }
 
-        if (data) {
-          addAlert({
+        if (response?.data) {
+          addToast({
             status: 'success',
             text: 'Preço alterado com sucesso!'
           });
@@ -64,7 +64,7 @@ export const FormUpdatePrice: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao alterar o preço!'
       });

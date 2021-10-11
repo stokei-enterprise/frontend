@@ -1,18 +1,18 @@
 import { Flex } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
-import React, { useContext } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
-import { AlertsContext } from '~/contexts/alerts';
-import { MeModel } from '~/services/@types/me';
-import { MeServiceRest } from '~/services/rest-api/services/me/me.service';
+import { useToasts } from '~/contexts/toasts';
+import { clientRestApi } from '~/services/rest-api';
 import { formatCpf } from '~/utils/format-cpf';
 import { formatBirthdayDateISO } from '~/utils/format-date';
 import { formatPhone } from '~/utils/format-phone';
 
 interface Props {
-  readonly user: MeModel;
+  readonly user: Api.Rest.MeModel;
   readonly onSuccess: () => any;
 }
 
@@ -21,7 +21,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
   user,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
   const formik = useFormik({
     initialValues: {
       firstname: user?.firstname,
@@ -41,7 +41,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
     }),
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const meService = new MeServiceRest({});
+        const meService = clientRestApi({}).me();
         const response = await meService.update({
           firstname: values.firstname,
           lastname: values.lastname,
@@ -50,8 +50,8 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
           phone: values.phone,
           dateBirthday: values.dateBirthday
         });
-        if (response) {
-          addAlert({
+        if (response?.data) {
+          addToast({
             status: 'success',
             text: 'Atualizado com sucesso!'
           });
@@ -61,7 +61,7 @@ export const FormUpdateAccountInfo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar os dados!'
       });

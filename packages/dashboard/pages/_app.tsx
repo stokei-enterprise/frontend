@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-import AlertsContextProvider from '~/contexts/alerts';
+import ToastsContextProvider from '~/contexts/toasts';
 import AppContextProvider from '~/contexts/app';
 import AuthContextProvider from '~/contexts/auth';
 import '~/styles/global/antd.css';
@@ -29,9 +29,9 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <AuthContextProvider>
         <AppContextProvider>
-          <AlertsContextProvider>
+          <ToastsContextProvider>
             <Component {...pageProps} />
-          </AlertsContextProvider>
+          </ToastsContextProvider>
         </AppContextProvider>
       </AuthContextProvider>
     </ThemeContainer>

@@ -4,7 +4,6 @@ import {
   Heading,
   Spacer,
   Stack,
-  Text,
   useDisclosure
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';

@@ -1,4 +1,5 @@
 import { Flex } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useFormik } from 'formik';
 import React, { useContext } from 'react';
 import * as Yup from 'yup';
@@ -6,14 +7,13 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { TextEditor } from '~/components/ui/text-editor';
-import { AlertsContext } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { CourseContext } from '~/contexts/course';
-import { CourseModel } from '~/services/@types/course';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
+import { clientRestApi } from '~/services/rest-api';
 import { ASPECT_RATIO_COURSES } from '~/utils/constants';
 
 interface Props {
-  readonly course: CourseModel;
+  readonly course: Api.Rest.CourseModel;
   readonly appId: string;
   readonly onSuccess: () => any;
 }
@@ -25,7 +25,7 @@ export const FormUpdateCourse: React.FC<Props> = ({
   ...props
 }) => {
   const { setCourseImageUrl } = useContext(CourseContext);
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
 
   const formik = useFormik({
     initialValues: {
@@ -49,10 +49,10 @@ export const FormUpdateCourse: React.FC<Props> = ({
         if (values.image) {
           formData.append('image', values.image);
         }
-        const courseService = new CourseServiceRest({ appId });
-        const data = await courseService.update(course?.id, formData);
-        if (data) {
-          addAlert({
+        const courseService = clientRestApi({ appId }).courses();
+        const response = await courseService.update(course?.id, formData);
+        if (response?.data) {
+          addToast({
             status: 'success',
             text: 'Curso atualizado com sucesso!'
           });
@@ -62,7 +62,7 @@ export const FormUpdateCourse: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao atualizar o curso!'
       });

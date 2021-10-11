@@ -6,6 +6,10 @@
     "build": "npx lerna run build",
     "start": "npx lerna run start --stream",
     "dev": "npx lerna run dev --parallel",
+    "dev:auth": "npx lerna run dev --scope @stokei/auth",
+    "dev:core": "npx lerna run dev --scope @stokei/core",
+    "dev:dashboard": "npx lerna run dev --scope @stokei/dashboard",
+    "dev:ui": "npx lerna run dev --scope @stokei/ui",
     "check-updates": "npx lerna exec npm run check-updates",
     "check-updates-deploy": "npx lerna exec npm run check-updates-deploy"
   },

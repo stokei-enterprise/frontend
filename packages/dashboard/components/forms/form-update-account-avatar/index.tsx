@@ -5,13 +5,13 @@ import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { UserAvatar } from '~/components/ui/user-avatar';
-import { AlertsContext } from '~/contexts/alerts';
+import { useToasts } from '~/contexts/toasts';
 import { AuthContext } from '~/contexts/auth';
-import { UserModel } from '~/services/@types/user';
-import { MeServiceRest } from '~/services/rest-api/services/me/me.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
-  readonly user: UserModel;
+  readonly user: Api.Rest.MeModel;
   readonly onSuccess: () => any;
 }
 
@@ -20,7 +20,7 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
   const { setAvatarUrl } = useContext(AuthContext);
 
   const formik = useFormik({
@@ -31,11 +31,11 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
         const formData = new FormData();
         formData.append('image', values.image);
 
-        const meService = new MeServiceRest({});
+        const meService = clientRestApi().me();
 
         const response = await meService.updateAvatar({ image: values.image });
-        if (response) {
-          addAlert({
+        if (response?.data) {
+          addToast({
             status: 'success',
             text: 'Foto alterada com sucesso!'
           });
@@ -45,7 +45,7 @@ export const FormUpdateAccountAvatar: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao alterar a foto do perfil!'
       });

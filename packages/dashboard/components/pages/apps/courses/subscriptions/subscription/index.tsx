@@ -1,17 +1,17 @@
 import { Badge, Flex, Text } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useRouter } from 'next/router';
 import { memo, useContext, useEffect, useMemo } from 'react';
 import { Card } from '~/components/ui/card';
 import { UserAvatar } from '~/components/ui/user-avatar';
 import { CourseContext } from '~/contexts/course';
 import { useRequest } from '~/hooks/use-request';
-import { SubscriptionModel } from '~/services/@types/subscription';
-import { CourseSubscriptionServiceRest } from '~/services/rest-api/services/course-subscription/course-subscription.service';
+import { clientRestApi } from '~/services/rest-api';
 import { colors } from '~/styles/colors';
 import { differenceDate, formatDate } from '~/utils/format-date';
 
 interface Props {
-  readonly subscription: SubscriptionModel;
+  readonly subscription: Api.Rest.SubscriptionModel;
 }
 
 const times = {
@@ -67,10 +67,13 @@ export const Subscription: React.FC<Props> = memo(({ subscription }) => {
   const router = useRouter();
   const { app, course } = useContext(CourseContext);
 
-  const courseSubscriptionService = new CourseSubscriptionServiceRest({
-    appId: app?.id,
-    courseId: course?.id
-  });
+  const courseSubscriptionService = clientRestApi({
+    appId: app?.id
+  })
+    .courses()
+    .subscriptions({
+      courseId: course?.id
+    });
 
   const {
     loading: loadingCancelSubscription,

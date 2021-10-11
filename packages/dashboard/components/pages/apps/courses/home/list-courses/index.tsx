@@ -1,12 +1,12 @@
 import { Flex, SimpleGrid } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { useContext } from 'react';
 import { AppContext } from '~/contexts/app';
-import { CourseModel } from '~/services/@types/course';
 import { Course } from '../course';
 import { NoCourse } from '../no-course';
 
 interface Props {
-  readonly courses: CourseModel[];
+  readonly courses: Api.Rest.CourseModel[];
 }
 
 export const ListCourses: React.FC<Props> = ({ courses }) => {

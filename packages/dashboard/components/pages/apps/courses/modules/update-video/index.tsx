@@ -4,14 +4,14 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  DrawerOverlay,
-} from "@chakra-ui/react";
-import React from "react";
-import { VideoModel } from "~/services/@types/video";
-import { FormUpdateVideo } from "~/components/forms/form-update-video";
+  DrawerOverlay
+} from '@chakra-ui/react';
+import React from 'react';
+import { Api } from '@stokei/core';
+import { FormUpdateVideo } from '~/components/forms/form-update-video';
 
 interface Props {
-  readonly video: VideoModel;
+  readonly video: Api.Rest.VideoModel;
   readonly moduleId: string;
   readonly moduleName: string;
   readonly appId: string;

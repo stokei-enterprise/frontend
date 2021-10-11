@@ -2,14 +2,14 @@ import { Flex } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/root/layout';
-import { AddAppBox, AddAppCard } from '~/components/pages/home/add-app';
+import { AddAppBox } from '~/components/pages/home/add-app';
 import { ListApps } from '~/components/pages/home/list-apps';
-import { Card } from '~/components/ui/card';
-import { AppModel } from '~/services/@types/app';
-import { AppServiceRest } from '~/services/rest-api/services/app/app.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
+import { getAuth } from '~/utils/is-auth';
 
 interface Props {
-  readonly apps: AppModel[];
+  readonly apps: Api.Rest.AppModel[];
 }
 
 export default function Home({ apps, ...props }: Props) {
@@ -31,22 +31,16 @@ export default function Home({ apps, ...props }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const appService = new AppServiceRest({ context });
-  const accessToken = appService.accessToken;
-
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: '/desconnected',
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
+  const appService = clientRestApi({ context }).apps();
   const apps = await appService.findAll();
   return {
     props: {
-      apps: apps?.items || []
+      apps: apps?.data?.items || []
     }
   };
 };

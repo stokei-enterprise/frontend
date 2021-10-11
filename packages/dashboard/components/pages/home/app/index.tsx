@@ -1,14 +1,14 @@
 import { Flex, Link } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import Router from 'next/router';
 import NextLink from 'next/link';
 import { memo } from 'react';
 import { ButtonOutlined } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
-import { AppModel } from '~/services/@types/app';
 import { AppAvatar } from '~/components/ui/app-avatar';
 
 interface Props {
-  readonly app: AppModel;
+  readonly app: Api.Rest.AppModel;
 }
 
 export const App: React.FC<Props> = memo(({ app }) => {

@@ -1,5 +1,4 @@
-import { AUTH_FRONTEND_URL } from '~/environments';
-import { colors } from '~/styles/colors';
+import { URLs } from '@stokei/core';
 
 export const SITE_NAME = 'Stokei';
 
@@ -16,7 +15,8 @@ export const assetsIconsUrl = 'https://assets.stokei.com/icons';
 
 export const landingPageUrl = 'https://stokei.com';
 
-export const logoutUrl = AUTH_FRONTEND_URL + '/logout';
+export const authUrl = URLs.FRONTEND_AUTH;
+export const logoutUrl = URLs.FRONTEND_AUTH + '/logout';
 
 export const desconnectedUrl = (appId?: string): string => {
   return `/desconnected`;

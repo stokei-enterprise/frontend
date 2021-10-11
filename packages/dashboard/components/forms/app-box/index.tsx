@@ -1,8 +1,8 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
-import { AppModel } from "~/services/@types/app";
+import { Flex, Image, Text } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 
 interface Props {
-  readonly app: AppModel;
+  readonly app: Api.Rest.AppModel;
 }
 
 export const AppBox: React.FC<Props> = ({ app, ...props }) => {

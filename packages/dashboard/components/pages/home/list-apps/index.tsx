@@ -1,11 +1,11 @@
 import { SimpleGrid } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
 import { Card } from '~/components/ui/card';
-import { AppModel } from '~/services/@types/app';
 import { AddAppCard } from '../add-app';
 import App from '../app';
 
 interface Props {
-  readonly apps: AppModel[];
+  readonly apps: Api.Rest.AppModel[];
 }
 
 export const ListApps: React.FC<Props> = ({ apps }) => {

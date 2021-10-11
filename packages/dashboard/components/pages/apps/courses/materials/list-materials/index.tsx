@@ -1,10 +1,10 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import { MaterialModel } from "~/services/@types/material";
-import { Material } from "../material";
-import { NoMaterial } from "../no-materials";
+import { SimpleGrid } from '@chakra-ui/react';
+import { Api } from '@stokei/core';
+import { Material } from '../material';
+import { NoMaterial } from '../no-materials';
 
 interface Props {
-  readonly materials: MaterialModel[];
+  readonly materials: Api.Rest.MaterialModel[];
   readonly courseId: string;
   readonly appId: string;
 }
@@ -12,7 +12,7 @@ interface Props {
 export const ListMaterials: React.FC<Props> = ({
   materials,
   appId,
-  courseId,
+  courseId
 }) => {
   return (
     <SimpleGrid width="full" spacing="10" columns={[1, 1, 2, 3]}>

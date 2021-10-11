@@ -17,11 +17,11 @@ export class MeServiceRest extends BaseService {
     super(data)
   }
 
-  async subscriptions(config: MeSubscriptionsServiceConfig) {
+  subscriptions(config: MeSubscriptionsServiceConfig) {
     return new MeSubscriptionsServiceRest(config)
   }
 
-  async courses(config: MeCoursesServiceConfig) {
+  courses(config: MeCoursesServiceConfig) {
     return new MeCoursesServiceRest(config)
   }
 

@@ -1,14 +1,14 @@
 import { Flex, Heading } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { InputFileImage } from '~/components/ui/input-file-image';
 import { InputFileVideo } from '~/components/ui/input-file-video';
 import { TextEditor } from '~/components/ui/text-editor';
-import { AlertsContext } from '~/contexts/alerts';
-import { CourseVideoServiceRest } from '~/services/rest-api/services/course-video/course-video.service';
+import { useToasts } from '~/contexts/toasts';
+import { clientRestApi } from '~/services/rest-api';
 
 interface Props {
   readonly appId: string;
@@ -22,7 +22,7 @@ export const FormAddVideo: React.FC<Props> = ({
   onSuccess,
   ...props
 }) => {
-  const { addAlert } = useContext(AlertsContext);
+  const { addToast } = useToasts();
 
   const [percentLoading, setPercentLoading] = useState(0);
 
@@ -47,14 +47,17 @@ export const FormAddVideo: React.FC<Props> = ({
         formData.append('thumbnail', values.thumbnail);
         formData.append('videoUrl', values.videoUrl);
 
-        const courseVideoService = new CourseVideoServiceRest({
-          moduleId,
+        const courseVideoService = clientRestApi({
           appId,
           onUploadProgress: (percent) => setPercentLoading(percent)
-        });
-        const data = await courseVideoService.create(formData);
-        if (data) {
-          addAlert({
+        })
+          .courses()
+          .videos({
+            moduleId
+          });
+        const response = await courseVideoService.create(formData);
+        if (response) {
+          addToast({
             status: 'success',
             text: 'Video adicionado com sucesso!'
           });
@@ -64,7 +67,7 @@ export const FormAddVideo: React.FC<Props> = ({
         }
       } catch (error) {}
 
-      addAlert({
+      addToast({
         status: 'error',
         text: 'Erro ao adicionar este video!'
       });
