@@ -8,10 +8,14 @@ export interface UserIsAllowedToEditCourseData {
   readonly context?: any;
 }
 
-export const userIsAllowedToSeeCourse = async (data: UserIsAllowedToSeeCourseData) => {
+export const userIsAllowedToSeeCourse = async (
+  data: UserIsAllowedToSeeCourseData
+) => {
   return true;
 };
 
-export const userIsAllowedToEditCourse = async (data: UserIsAllowedToSeeCourseData) => {
+export const userIsAllowedToEditCourse = async (
+  data: UserIsAllowedToSeeCourseData
+) => {
   return true;
 };
