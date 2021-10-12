@@ -10,6 +10,7 @@ import { Title } from '~/components/pages/courses/videos/title';
 import { Card } from '~/components/ui/card';
 import { VideoPlayer } from '~/components/ui/video-player';
 import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
 import { getAuth } from '~/utils/is-auth';
 
 interface Props {
@@ -58,21 +59,30 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : '';
-  const videoId = context?.params?.videoId ? context?.params?.videoId + '' : '';
-
   const clientApi = clientRestApi({ context });
+
+  const courseId = extractContextURLParam(
+    'courseId',
+    context?.params?.courseId
+  );
+  const videoId = extractContextURLParam('videoId', context?.params?.videoId);
+
   const videoService = clientApi.videos();
-  const video = await videoService.findById(videoId);
-  if (!video?.data) {
+  let video = null;
+  try {
+    video = (await videoService.findById(videoId))?.data;
+  } catch (error) {}
+  if (!video) {
     return {
       notFound: true
     };
   }
+
   const moduleService = clientApi.courses().modules({ courseId });
-  const modules = (await moduleService.findAll())?.data || [];
+  let modules = [];
+  try {
+    modules = (await moduleService.findAll())?.data;
+  } catch (error) {}
   return {
     props: {
       video,

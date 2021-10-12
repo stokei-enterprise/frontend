@@ -23,10 +23,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: auth.redirect };
   }
 
-  const courses = await clientRestApi({ context }).me().courses({}).findAll();
+  let courses = [];
+  try {
+    courses = (await clientRestApi({ context }).me().courses({}).findAll())
+      ?.data?.items;
+  } catch (error) {}
   return {
     props: {
-      courses: courses?.data?.items || []
+      courses
     }
   };
 };

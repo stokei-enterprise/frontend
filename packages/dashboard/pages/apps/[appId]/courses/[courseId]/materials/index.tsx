@@ -4,8 +4,10 @@ import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/courses/layout';
 import Header from '~/components/pages/apps/courses/materials/header';
 import ListMaterials from '~/components/pages/apps/courses/materials/list-materials';
-import { CourseMaterialServiceRest } from '~/services/rest-api/services/course-material/course-material.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ materials, courseId, appId, ...props }) {
   return (
@@ -23,27 +25,27 @@ export default function Home({ materials, courseId, appId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const courseMaterialService = new CourseMaterialServiceRest({
-    courseId,
-    context
-  });
-  const appId = courseMaterialService.appId;
-  const accessToken = courseMaterialService.accessToken;
-
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const materials = await courseMaterialService.findAll();
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
+  }
+
+  const courseMaterialService = clientRestApi({
+    context
+  })
+    .courses()
+    .materials({ courseId });
+  const appId = auth.appId;
+  let materials = [];
+  try {
+    materials = (await courseMaterialService.findAll())?.data;
+  } catch (error) {}
   return {
     props: {
       materials: materials || [],

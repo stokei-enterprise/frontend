@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import React from "react";
-import { useApp } from "~/hooks/use-app";
-import { AppModel } from "~/services/@types/app";
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useApp } from '~/hooks/use-app';
+import { Api } from '@stokei/core';
 
 export interface AppContextValues {
-  readonly app: AppModel;
+  readonly app: Api.Rest.AppModel;
   readonly baseUrl: string;
   readonly loading: boolean;
 }
@@ -23,7 +23,7 @@ const AppContextProvider: React.FC<Props> = ({ children }) => {
       value={{
         app,
         loading,
-        baseUrl: router?.query?.appId ? `/apps/${router?.query?.appId}` : "",
+        baseUrl: router?.query?.appId ? `/apps/${router?.query?.appId}` : ''
       }}
     >
       {children}

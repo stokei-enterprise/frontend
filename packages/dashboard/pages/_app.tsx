@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import ToastsContextProvider from '~/contexts/toasts';
 import AppContextProvider from '~/contexts/app';
 import AuthContextProvider from '~/contexts/auth';
+import { ThemeProvider } from '@stokei/ui';
 import '~/styles/global/antd.css';
 import '~/styles/global/global.css';
 import '~/styles/global/nprogress.css';

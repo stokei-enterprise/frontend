@@ -6,8 +6,10 @@ import { Layout } from '~/components/layouts/courses/layout';
 import { Header } from '~/components/pages/apps/courses/modules/header';
 import { ListModules } from '~/components/pages/apps/courses/modules/list-modules';
 import { NoModule } from '~/components/pages/apps/courses/modules/no-module';
-import { CourseModuleServiceRest } from '~/services/rest-api/services/course-module/course-module.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ modules, courseId, appId, ...props }) {
   const router = useRouter();
@@ -32,27 +34,28 @@ export default function Home({ modules, courseId, appId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const courseModuleService = new CourseModuleServiceRest({
-    courseId,
-    context
-  });
-  const appId = courseModuleService.appId;
-  const accessToken = courseModuleService.accessToken;
-
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const modules = await courseModuleService.findAll();
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
+  }
+
+  const courseModuleService = clientRestApi({
+    context
+  })
+    .courses()
+    .modules({ courseId });
+  const appId = auth.appId;
+
+  let modules = [];
+  try {
+    modules = (await courseModuleService.findAll())?.data;
+  } catch (error) {}
   return {
     props: {
       modules: modules || [],

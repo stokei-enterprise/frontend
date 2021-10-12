@@ -6,27 +6,37 @@ export interface AuthValidateAndRedirectData {
 }
 
 export const getAuth = async (data: AuthValidateAndRedirectData) => {
-  const meService = clientRestApi({ context: data.context }).me();
-  if (!meService.accessToken) {
-    return {
-      user: null,
-      redirect: {
-        destination: desconnectedUrl(meService.appId),
-        permanent: false
-      }
-    };
-  }
-  const user = (await meService.load())?.data;
+  let user = null;
+  let appId = null;
+
+  try {
+    const meService = clientRestApi({ context: data.context }).me();
+    appId = meService.appId;
+    if (!meService.accessToken) {
+      return {
+        user: null,
+        redirect: {
+          destination: desconnectedUrl(appId),
+          permanent: false
+        }
+      };
+    }
+    user = (await meService.load())?.data;
+  } catch (error) {}
+
   if (!user) {
     return {
       user,
+      appId,
       redirect: {
-        destination: desconnectedUrl(meService.appId),
+        destination: desconnectedUrl(appId),
         permanent: false
       }
     };
   }
+
   return {
-    user
+    user,
+    appId
   };
 };

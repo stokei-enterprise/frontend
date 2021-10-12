@@ -1,19 +1,17 @@
 import { useEffect } from 'react';
-import { CourseModel } from '~/services/@types/course';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseCourseResponse {
   readonly loading: boolean;
-  readonly course: CourseModel;
+  readonly course: Api.Rest.CourseModel;
 }
 
 export const useCourse = ({ courseId, appId }): UseCourseResponse => {
-  const courseService = new CourseServiceRest({
-    appId
-  });
+  const courseService = clientRestApi({ appId }).courses();
   const { data, loading, submit } = useRequest({
-    submit: () => courseService.findById(courseId)
+    submit: async () => (await courseService.findById(courseId))?.data
   });
 
   useEffect(() => {

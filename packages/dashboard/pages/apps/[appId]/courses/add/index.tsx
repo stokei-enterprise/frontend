@@ -5,8 +5,7 @@ import { FormAddCourse } from '~/components/forms/form-add-course';
 import { Layout } from '~/components/layouts/apps/layout';
 import { Container } from '~/components/layouts/container';
 import { Header } from '~/components/pages/apps/courses/add-course/header';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ appId, ...props }) {
   return (
@@ -28,19 +27,14 @@ export default function Home({ appId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseService = new CourseServiceRest({ context });
-  if (!courseService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(courseService.appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
-
+  
   return {
     props: {
-      appId: courseService.appId
+      appId: auth.appId
     }
   };
 };

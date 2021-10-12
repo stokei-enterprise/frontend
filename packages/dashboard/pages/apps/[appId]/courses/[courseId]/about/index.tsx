@@ -8,12 +8,14 @@ import { Teacher } from '~/components/pages/courses/about/footer/teacher';
 import { Card } from '~/components/ui/card';
 import { Markdown } from '~/components/ui/markdown';
 import { AuthContext } from '~/contexts/auth';
-import { CourseModel } from '~/services/@types/course';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 interface Props {
-  readonly course: CourseModel;
+  readonly course: Api.Rest.CourseModel;
 }
 
 export default function Home({ course, ...props }: Props) {
@@ -61,35 +63,25 @@ export default function Home({ course, ...props }: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseService = new CourseServiceRest({ context });
-  const appId = courseService.appId;
-
-  if (!courseService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const course = await courseService.findById(courseId);
-
-  if (!course) {
-    return {
-      notFound: true
-    };
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
   }
 
+  let course = null;
+  try {
+    course = (await clientRestApi({ context }).courses().findById(courseId))
+      ?.data;
+  } catch (error) {}
   return {
     props: {
-      course,
-      courseId,
-      appId
+      course: course || null
     }
   };
 };

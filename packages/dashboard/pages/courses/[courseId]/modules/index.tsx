@@ -5,6 +5,7 @@ import { Layout } from '~/components/pages/courses/layout';
 import { Header } from '~/components/pages/courses/modules/header';
 import { ListModules } from '~/components/pages/courses/modules/list-modules';
 import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
 import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ modules, courseId, ...props }) {
@@ -24,17 +25,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : '';
+  const courseId = extractContextURLParam(
+    'courseId',
+    context?.params?.courseId
+  );
 
   const moduleService = clientRestApi({ context })
     .courses()
     .modules({ courseId });
-  const modules = await moduleService.findAll();
+  let modules = [];
+  try {
+    modules = (await moduleService.findAll())?.data;
+  } catch (error) {}
   return {
     props: {
-      modules: modules?.data || [],
+      modules: modules || [],
       courseId
     }
   };

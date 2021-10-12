@@ -377,7 +377,7 @@ export const FormAddApp: React.FC<FormAddAppProps> = ({
             onChange={(e) =>
               formik.setFieldValue(
                 'bankHolderDocument',
-                e.target.value?.length >= 14
+                e.target.value?.length > 14
                   ? formatCnpj(e.target.value)
                   : formatCpf(e.target.value)
               )

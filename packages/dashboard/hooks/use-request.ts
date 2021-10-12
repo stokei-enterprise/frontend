@@ -20,11 +20,12 @@ export function useRequest(props: RequestProps): RequestPayload {
     setLoading(true);
     try {
       const response = await props?.submit();
+      setLoading(false);
       setData(response);
     } catch (error) {
+      setLoading(false);
       setError(error);
     }
-    setLoading(false);
   }, [props]);
 
   return { data, error, loading, submit };

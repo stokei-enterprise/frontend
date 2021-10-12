@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { PriceModel } from '~/services/@types/price';
-import { SkuServiceRest } from '~/services/rest-api/services/sku/sku.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseSkuPricesResponse {
   readonly loading: boolean;
-  readonly prices: PriceModel[];
+  readonly prices: Api.Rest.PriceModel[];
 }
 
 interface Props {
@@ -14,10 +14,10 @@ interface Props {
 }
 
 export const useSkuPrices = ({ appId, skuId }: Props): UseSkuPricesResponse => {
-  const skuService = new SkuServiceRest({ appId });
+  const skuService = clientRestApi({ appId }).skus();
 
   const { data, loading, submit } = useRequest({
-    submit: () => skuService.findAllPrices(skuId)
+    submit: async () => (await skuService.findAllPrices(skuId))?.data
   });
 
   useEffect(() => {

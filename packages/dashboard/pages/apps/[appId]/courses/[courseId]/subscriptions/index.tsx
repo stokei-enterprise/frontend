@@ -6,8 +6,12 @@ import { Layout } from '~/components/layouts/courses/layout';
 import { Header } from '~/components/pages/apps/courses/subscriptions/header';
 import { ListSubscriptions } from '~/components/pages/apps/courses/subscriptions/list-subscriptions';
 import { clientRestApi } from '~/services/rest-api';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { desconnectedUrl } from '~/utils/constants';
+import {
+  extractContextURLParam,
+  extractContextURLQueryParam
+} from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ subscriptions, ...props }) {
   const router = useRouter();
@@ -23,43 +27,36 @@ export default function Home({ subscriptions, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
+  }
+
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
+  }
 
   const courseService = clientRestApi({
     context
   }).courses();
 
-  const appId = courseService.appId;
+  const status = extractContextURLQueryParam('status', context);
 
-  if (!courseId || !appId) {
-    return {
-      notFound: true
-    };
-  }
+  let subscriptions = [];
+  try {
+    subscriptions = (
+      await courseService.subscriptions({ courseId }).findAll({
+        status: `${status}:desc`,
+        createdAt: ':desc'
+      })
+    )?.data?.items;
+  } catch (error) {}
 
-  if (!courseService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
-  }
-
-  const status = context?.query?.status ? context?.query?.status + '' : null;
-  const subscriptions = await courseService
-    .subscriptions({ courseId })
-    .findAll({
-      status: `${status}:desc`,
-      createdAt: ':desc'
-    });
   return {
     props: {
-      subscriptions: subscriptions?.items || [],
-      courseId,
-      appId
+      subscriptions: subscriptions || []
     }
   };
 };

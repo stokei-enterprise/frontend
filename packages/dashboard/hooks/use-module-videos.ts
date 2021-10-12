@@ -1,28 +1,31 @@
 import { useEffect } from 'react';
-import { VideoModel } from '~/services/@types/video';
 import { FindAllPayload } from '~/services/interfaces/find-all.payload';
-import { CourseVideoServiceRest } from '~/services/rest-api/services/course-video/course-video.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseModuleVideosResponse {
   readonly loading: boolean;
-  readonly videos: FindAllPayload<VideoModel>;
+  readonly videos: Api.Rest.FindAllPayload<Api.Rest.VideoModel>;
 }
 
 export const useModuleVideos = ({
   appId,
   moduleId
 }): UseModuleVideosResponse => {
-  const courseService = new CourseVideoServiceRest({
-    appId,
-    moduleId
-  });
+  const courseVideosService = clientRestApi({
+    appId
+  })
+    .courses()
+    .videos({ moduleId });
   const { data, loading, submit } = useRequest({
-    submit: () =>
-      courseService.findAll({
-        title: ':asc',
-        position: ':asc'
-      })
+    submit: async () =>
+      (
+        await courseVideosService.findAll({
+          title: ':asc',
+          position: ':asc'
+        })
+      )?.data
   });
 
   useEffect(() => {

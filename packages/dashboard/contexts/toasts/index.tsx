@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { mapToastData, ToastData } from '~/components/ui/toast';
 
 export interface ToastsContextValues {
@@ -8,7 +8,7 @@ export interface ToastsContextValues {
 
 export const ToastsContext = React.createContext({} as ToastsContextValues);
 
-export const useToasts = () => useToasts();
+export const useToasts = () => useContext(ToastsContext);
 
 const ToastsContextProvider: React.FC = ({ children }) => {
   const toast = useToast();

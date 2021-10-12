@@ -6,8 +6,10 @@ import { FormUpdateCourse } from '~/components/forms/form-update-course';
 import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/courses/layout';
 import { Header } from '~/components/pages/apps/courses/settings/header';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ modules, course, appId, ...props }) {
   const router = useRouter();
@@ -33,35 +35,26 @@ export default function Home({ modules, course, appId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseService = new CourseServiceRest({ context });
-  const appId = courseService.appId;
-  const accessToken = courseService.accessToken;
-
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const course = await courseService.findById(courseId);
-  if (!course) {
-    return {
-      notFound: false,
-      props: {}
-    };
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
   }
 
+  const courseService = clientRestApi({ context }).courses();
+  let course = null;
+  try {
+    course = (await courseService.findById(courseId))?.data;
+  } catch (error) {}
   return {
     props: {
       course,
-      appId
+      appId: auth.appId
     }
   };
 };

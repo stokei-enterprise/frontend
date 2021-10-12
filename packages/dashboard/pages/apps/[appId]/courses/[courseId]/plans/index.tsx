@@ -5,8 +5,13 @@ import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/courses/layout';
 import { Header } from '~/components/pages/apps/courses/plans/header';
 import ListPlans from '~/components/pages/apps/courses/plans/list-plans';
-import { CourseSkuServiceRest } from '~/services/rest-api/services/course-sku/course-sku.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import {
+  extractContextURLParam,
+  extractContextURLQueryParam
+} from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ plans, appId, courseId, ...props }) {
   return (
@@ -22,29 +27,35 @@ export default function Home({ plans, appId, courseId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const courseSkuService = new CourseSkuServiceRest({ context, courseId });
-  const appId = courseSkuService.appId;
-  const accessToken = courseSkuService.accessToken;
-  if (!accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
-  const query = context.query;
-  const plans = await courseSkuService.findAll({
-    name: ':asc',
-    status: `${query?.status ? query?.status + '' : ''}:asc`
-  });
+
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
+  }
+
+  const courseSkuService = clientRestApi({ context })
+    .courses()
+    .skus({ courseId });
+  const appId = auth.appId;
+  const status = extractContextURLQueryParam('status', context);
+  let plans = [];
+  try {
+    plans = (
+      await courseSkuService.findAll({
+        name: ':asc',
+        status: `${status || ''}:asc`
+      })
+    )?.data?.items;
+  } catch (error) {}
+
   return {
     props: {
-      plans: plans?.items || [],
+      plans: plans || [],
       courseId,
       appId
     }

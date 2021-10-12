@@ -5,8 +5,10 @@ import { Layout } from '~/components/layouts/courses/layout';
 import { Header } from '~/components/pages/apps/courses/users/header';
 import { ListUsers } from '~/components/pages/apps/courses/users/list-users';
 import { NoUser } from '~/components/pages/apps/courses/users/no-users';
-import { CourseUserServiceRest } from '~/services/rest-api/services/course-user/course-user.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ users, ...props }) {
   return (
@@ -20,34 +22,28 @@ export default function Home({ users, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : null;
-
-  const courseUserService = new CourseUserServiceRest({ context, courseId });
-  const appId = courseUserService.appId;
-
-  if (!courseId || !appId) {
-    return {
-      notFound: true
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  if (!courseUserService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId });
+  if (!userIsAllowed) {
+    return { notFound: true };
   }
 
-  const users = await courseUserService.findAll();
+  const courseUserService = clientRestApi({ context })
+    .courses()
+    .users({ courseId });
+
+  let users = [];
+  try {
+    users = (await courseUserService.findAll())?.data?.items || [];
+  } catch (error) {}
   return {
     props: {
-      users: users?.items || [],
-      courseId,
-      appId
+      users: users || []
     }
   };
 };

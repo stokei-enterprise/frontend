@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
-import { AppModel } from '~/services/@types/app';
-import { AppServiceRest } from '~/services/rest-api/services/app/app.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseAppResponse {
   readonly loading: boolean;
-  readonly app: AppModel;
+  readonly app: Api.Rest.AppModel;
 }
 
 export const useApp = ({ appId }): UseAppResponse => {
-  const appService = new AppServiceRest({ appId });
+  const appService = clientRestApi({ appId }).apps();
 
   const { data, loading, submit } = useRequest({
-    submit: () => appService.loadInfos()
+    submit: async () => (await appService.loadInfos())?.data
   });
 
   useEffect(() => {

@@ -31,14 +31,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const meService = clientRestApi({ context }).me().subscriptions({});
   const status = context?.query?.status ? context?.query?.status + '' : '';
   const page = context?.query?.page ? context?.query?.page + '' : '0';
-  const subscriptions = await meService.findAll({
-    status: `${status}:desc`,
-    createdAt: `:desc`,
-    page
-  });
+  let subscriptions = [];
+  try {
+    subscriptions = (
+      await meService.findAll({
+        status: `${status}:desc`,
+        createdAt: `:desc`,
+        page
+      })
+    )?.data?.items;
+  } catch (error) {}
   return {
     props: {
-      subscriptions: subscriptions?.data?.items || []
+      subscriptions
     }
   };
 };

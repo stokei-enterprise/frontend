@@ -1,7 +1,7 @@
 import {
   ContainerProps,
-  Container as ContainerDefault,
-} from "@chakra-ui/react";
+  Container as ContainerDefault
+} from '@chakra-ui/react';
 
 interface Props extends ContainerProps {}
 
@@ -11,7 +11,7 @@ export const Container: React.FC<Props> = ({ children, ...props }) => {
       marginTop={0}
       paddingY={0}
       paddingX={5}
-      maxW="container.lg"
+      maxW="full"
       {...props}
     >
       {children}

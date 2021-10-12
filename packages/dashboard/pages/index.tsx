@@ -37,10 +37,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const appService = clientRestApi({ context }).apps();
-  const apps = await appService.findAll();
+  let apps = [];
+  try {
+    apps = (await appService.findAll())?.data?.items;
+  } catch (error) {}
   return {
     props: {
-      apps: apps?.data?.items || []
+      apps
     }
   };
 };

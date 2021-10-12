@@ -83,16 +83,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const appService = clientRestApi({ context }).apps();
-  if (appService.appId) {
-    const app = await appService.loadInfos();
-    if (app?.data) {
-      return {
-        props: {
-          app: app?.data
-        }
-      };
+  try {
+    if (auth.appId) {
+      const app = await appService.loadInfos();
+      if (app?.data) {
+        return {
+          props: {
+            app: app?.data
+          }
+        };
+      }
     }
-  }
+  } catch (error) {}
 
   return {
     notFound: true

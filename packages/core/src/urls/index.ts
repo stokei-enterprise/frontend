@@ -13,5 +13,5 @@ export const API_AUTH = isProduction
   : 'http://localhost:4050'
 
 export const API = isProduction
-  ? 'https://api.stokei.com'
-  : 'http://localhost:4000'
+  ? 'https://api.stokei.com/v1'
+  : 'http://localhost:4000/v1'

@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
-import { CategoryModel } from '~/services/@types/category';
-import { CategoryServiceRest } from '~/services/rest-api/services/category/category.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseCategoriesResponse {
   readonly loading: boolean;
-  readonly categories: CategoryModel[];
+  readonly categories: Api.Rest.CategoryModel[];
 }
 
 export const useCategories = (): UseCategoriesResponse => {
-  const categoryService = new CategoryServiceRest({});
+  const categoryService = clientRestApi().categories();
 
   const { data, loading, submit } = useRequest({
-    submit: () => categoryService.findAll()
+    submit: async () => (await categoryService.findAll())?.data
   });
 
   useEffect(() => {

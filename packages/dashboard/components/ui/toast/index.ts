@@ -5,7 +5,7 @@ export interface ToastData {
   readonly title?: string;
   readonly text: string;
   readonly status: 'info' | 'warning' | 'success' | 'error';
-  readonly render: (props: RenderProps) => ReactNode;
+  readonly render?: (props: RenderProps) => ReactNode;
 }
 
 export const mapToastData = (data: ToastData): UseToastOptions => ({

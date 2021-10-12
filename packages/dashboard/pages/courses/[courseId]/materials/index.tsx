@@ -5,6 +5,7 @@ import { Layout } from '~/components/pages/courses/layout';
 import { Header } from '~/components/pages/courses/materials/header';
 import { ListMaterials } from '~/components/pages/courses/materials/list-materials';
 import { clientRestApi } from '~/services/rest-api';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
 import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ materials, courseId, ...props }) {
@@ -24,17 +25,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context?.params?.courseId + ''
-    : '';
-
+  const courseId = extractContextURLParam(
+    'courseId',
+    context?.params?.courseId
+  );
   const materialService = clientRestApi({ context })
     .courses()
     .materials({ courseId });
-  const materials = await materialService.findAll();
+  let materials = [];
+  try {
+    materials = (await materialService.findAll())?.data;
+  } catch (error) {}
   return {
     props: {
-      materials: materials?.data || [],
+      materials: materials || [],
       courseId
     }
   };

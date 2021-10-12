@@ -1,4 +1,5 @@
-import { SubscriptionServiceRest } from '~/services/rest-api/services/subscription/subscription.service';
+import { Api } from '@stokei/core';
+import { clientRestApi } from '~/services/rest-api';
 import { useRequest } from './use-request';
 
 export interface UseAppResponse {
@@ -17,9 +18,9 @@ export const useStartSubscription = ({
   subscriptionId,
   appId
 }: Props): UseAppResponse => {
-  const subscriptionService = new SubscriptionServiceRest({ appId });
+  const subscriptionService = clientRestApi({ appId }).subscriptions();
   const { data, error, loading, submit } = useRequest({
-    submit: () => subscriptionService.start(subscriptionId)
+    submit: async () => (await subscriptionService.start(subscriptionId))?.data
   });
 
   return {

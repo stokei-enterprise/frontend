@@ -1,11 +1,11 @@
 import { Flex, Heading, Text } from '@chakra-ui/react';
 import { Layout as RootLayout } from '~/components/layouts/root/layout';
 import { Menu } from '~/components/pages/settings/menu';
-import { MeModel } from '~/services/@types/me';
+import { Api } from '@stokei/core';
 import { Container } from '../../container';
 
 export interface LayoutProps {
-  readonly user: MeModel;
+  readonly user: Api.Rest.MeModel;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, user, ...props }) => {

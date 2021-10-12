@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { UserModel } from '~/services/@types/user';
+import { Api } from '@stokei/core';
 import { useAuth } from '~/hooks/use-auth';
 import { useState } from 'react';
 
 export interface AuthContextValues {
-  readonly user: UserModel;
+  readonly user: Api.Rest.UserModel;
   readonly loading: boolean;
   readonly authenticated: boolean;
   readonly setAvatarUrl: (url: string) => void;
@@ -18,7 +18,7 @@ export const AuthContext = React.createContext<AuthContextValues>(
 
 const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const { user: _user, loading } = useAuth();
-  const [user, setUser] = useState(() => _user);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     setUser(_user);

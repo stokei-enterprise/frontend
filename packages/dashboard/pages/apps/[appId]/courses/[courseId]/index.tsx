@@ -2,8 +2,9 @@ import { Box } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { Container } from '~/components/layouts/container';
 import { Layout } from '~/components/layouts/courses/layout';
-import { CourseServiceRest } from '~/services/rest-api/services/course/course.service';
-import { desconnectedUrl } from '~/utils/constants';
+import { extractContextURLParam } from '~/utils/extract-context-url-data';
+import { userIsAllowedToSeeCourse } from '~/utils/is-allowed';
+import { getAuth } from '~/utils/is-auth';
 
 export default function Home({ courseId, appId, ...props }) {
   return (
@@ -23,25 +24,20 @@ export default function Home({ courseId, appId, ...props }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const courseService = new CourseServiceRest({ context });
-  const appId = courseService.appId;
-
-  if (!courseService.accessToken) {
-    return {
-      redirect: {
-        destination: desconnectedUrl(appId),
-        permanent: false
-      }
-    };
+  const auth = await getAuth({ context });
+  if (auth.redirect) {
+    return { redirect: auth.redirect };
   }
 
-  const courseId = context?.params?.courseId
-    ? context.params.courseId + ''
-    : null;
+  const courseId = extractContextURLParam('courseId', context);
+  const userIsAllowed = userIsAllowedToSeeCourse({ context, courseId});
+  if (!userIsAllowed) {
+    return { notFound: true };
+  }
 
   return {
     props: {
-      appId,
+      appId: auth.appId,
       courseId
     }
   };
